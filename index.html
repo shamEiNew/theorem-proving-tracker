@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Theorem Proving Roadmap Tracker</title>
+    <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+    <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.5/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        // Storage polyfill for GitHub Pages
+        const storage = {
+            get: (key) => {
+                try {
+                    const item = localStorage.getItem(key);
+                    return item ? { key, value: item, shared: false } : null;
+                } catch (e) {
+                    return null;
+                }
+            },
+            set: (key, value) => {
+                try {
+                    localStorage.setItem(key, value);
+                    return { key, value, shared: false };
+                } catch (e) {
+                    return null;
+                }
+            }
+        };
+
+        const CheckCircle2 = () => (
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+            </svg>
+        );
+
+        const Circle = () => (
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <circle cx="12" cy="12" r="10"></circle>
+            </svg>
+        );
+
+        const Download = () => (
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="7 10 12 15 17 10"></polyline>
+                <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+        );
+
+        const BookOpen = () => (
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+            </svg>
+        );
+
+        const Code = () => (
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <polyline points="16 18 22 12 16 6"></polyline>
+                <polyline points="8 6 2 12 8 18"></polyline>
+            </svg>
+        );
+
+        const Target = () => (
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <circle cx="12" cy="12" r="6"></circle>
+                <circle cx="12" cy="12" r="2"></circle>
+            </svg>
+        );
+
+        const Calendar = () => (
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+            </svg>
+        );
+
+        const TheoremProvingTracker = () => {
+            const [tasks, setTasks] = useState(initialTasks);
+            const [filter, setFilter] = useState('all');
+
+            useEffect(() => {
+                const saved = storage.get('theorem-proving-tasks');
+                if (saved) {
+                    try {
+                        setTasks(JSON.parse(saved.value));
+                    } catch (e) {
+                        console.error('Failed to load saved tasks');
+                    }
+                }
+            }, []);
+
+            const saveTasks = (updatedTasks) => {
+                storage.set('theorem-proving-tasks', JSON.stringify(updatedTasks));
+                setTasks(updatedTasks);
+            };
+
+            const toggleTask = (id) => {
+                const updated = tasks.map(task =>
+                    task.id === id ? { ...task, completed: !task.completed } : task
+                );
+                saveTasks(updated);
+            };
+
+            const updateNotes = (id, notes) => {
+                const updated = tasks.map(task =>
+                    task.id === id ? { ...task, notes } : task
+                );
+                saveTasks(updated);
+            };
+
+            const getProgress = (phase) => {
+                const phaseTasks = tasks.filter(t => t.phase === phase);
+                const completed = phaseTasks.filter(t => t.completed).length;
+                return phaseTasks.length > 0 ? Math.round((completed / phaseTasks.length) * 100) : 0;
+            };
+
+            const getTotalProgress = () => {
+                const completed = tasks.filter(t => t.completed).length;
+                return Math.round((completed / tasks.length) * 100);
+            };
+
+            const exportToCSV = () => {
+                const headers = ['Phase', 'Week', 'Task Type', 'Description', 'Status', 'Notes'];
+                const rows = tasks.map(t => [
+                    t.phase,
+                    t.week,
+                    t.type,
+                    t.description.replace(/,/g, ';'),
+                    t.completed ? 'Complete' : 'Pending',
+                    (t.notes || '').replace(/,/g, ';')
+                ]);
+                
+                const csv = [headers, ...rows].map(row => row.join(',')).join('\n');
+                const blob = new Blob([csv], { type: 'text/csv' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'theorem-proving-roadmap.csv';
+                a.click();
+            };
+
+            const filteredTasks = tasks.filter(task => {
+                if (filter === 'all') return true;
+                if (filter === 'completed') return task.completed;
+                if (filter === 'pending') return !task.completed;
+                return task.phase === filter;
+            });
+
+            const phases = ['Phase 1', 'Phase 2', 'Phase 3', 'Phase 4'];
+
+            return (
+                <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 p-6">
+                    <div className="max-w-7xl mx-auto">
+                        <div className="bg-white rounded-xl shadow-lg p-6 mb-6">
+                            <div className="flex items-center justify-between mb-4 flex-wrap gap-4">
+                                <div>
+                                    <h1 className="text-3xl font-bold text-gray-900 mb-2">
+                                        🧭 Symbolic ML for Theorem Proving
+                                    </h1>
+                                    <p className="text-gray-600">6-Month Learning Roadmap Tracker</p>
+                                </div>
+                                <button
+                                    onClick={exportToCSV}
+                                    className="flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
+                                >
+                                    <Download />
+                                    Export CSV
+                                </button>
+                            </div>
+                            
+                            <div className="mb-4">
+                                <div className="flex justify-between text-sm text-gray-600 mb-1">
+                                    <span>Overall Progress</span>
+                                    <span className="font-semibold">{getTotalProgress()}%</span>
+                                </div>
+                                <div className="w-full bg-gray-200 rounded-full h-3">
+                                    <div
+                                        className="bg-gradient-to-r from-indigo-500 to-purple-500 h-3 rounded-full transition-all duration-500"
+                                        style={{ width: `${getTotalProgress()}%` }}
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                                {phases.map((phase) => (
+                                    <div key={phase} className="bg-gray-50 rounded-lg p-3">
+                                        <div className="text-sm font-semibold text-gray-700 mb-2">{phase}</div>
+                                        <div className="w-full bg-gray-200 rounded-full h-2">
+                                            <div
+                                                className="bg-indigo-500 h-2 rounded-full transition-all"
+                                                style={{ width: `${getProgress(phase)}%` }}
+                                            />
+                                        </div>
+                                        <div className="text-xs text-gray-500 mt-1">{getProgress(phase)}%</div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
+                        <div className="bg-white rounded-xl shadow-lg p-4 mb-6">
+                            <div className="flex flex-wrap gap-2">
+                                {['all', 'pending', 'completed', ...phases].map((f) => (
+                                    <button
+                                        key={f}
+                                        onClick={() => setFilter(f)}
+                                        className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+                                            filter === f
+                                                ? 'bg-indigo-600 text-white'
+                                                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                                        }`}
+                                    >
+                                        {f.charAt(0).toUpperCase() + f.slice(1)}
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+
+                        <div className="bg-white rounded-xl shadow-lg overflow-hidden">
+                            <div className="overflow-x-auto">
+                                <table className="w-full">
+                                    <thead className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white">
+                                        <tr>
+                                            <th className="px-4 py-3 text-left text-sm font-semibold">✓</th>
+                                            <th className="px-4 py-3 text-left text-sm font-semibold">Phase</th>
+                                            <th className="px-4 py-3 text-left text-sm font-semibold">Week</th>
+                                            <th className="px-4 py-3 text-left text-sm font-semibold">Type</th>
+                                            <th className="px-4 py-3 text-left text-sm font-semibold">Description</th>
+                                            <th className="px-4 py-3 text-left text-sm font-semibold">Notes</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {filteredTasks.map((task) => (
+                                            <tr
+                                                key={task.id}
+                                                className={`border-b border-gray-100 hover:bg-gray-50 transition-colors ${
+                                                    task.completed ? 'bg-green-50' : ''
+                                                }`}
+                                            >
+                                                <td className="px-4 py-3">
+                                                    <button
+                                                        onClick={() => toggleTask(task.id)}
+                                                        className="hover:scale-110 transition-transform"
+                                                    >
+                                                        {task.completed ? (
+                                                            <div className="text-green-600"><CheckCircle2 /></div>
+                                                        ) : (
+                                                            <div className="text-gray-400"><Circle /></div>
+                                                        )}
+                                                    </button>
+                                                </td>
+                                                <td className="px-4 py-3">
+                                                    <span className="inline-block px-3 py-1 bg-indigo-100 text-indigo-700 rounded-full text-sm font-medium">
+                                                        {task.phase}
+                                                    </span>
+                                                </td>
+                                                <td className="px-4 py-3 text-gray-700 font-medium">{task.week}</td>
+                                                <td className="px-4 py-3">
+                                                    <span className={`inline-flex items-center gap-1 px-2 py-1 rounded text-sm ${getTypeStyle(task.type)}`}>
+                                                        {getTypeIcon(task.type)}
+                                                        {task.type}
+                                                    </span>
+                                                </td>
+                                                <td className="px-4 py-3 text-gray-800">{task.description}</td>
+                                                <td className="px-4 py-3">
+                                                    <input
+                                                        type="text"
+                                                        value={task.notes || ''}
+                                                        onChange={(e) => updateNotes(task.id, e.target.value)}
+                                                        placeholder="Add notes..."
+                                                        className="w-full px-2 py-1 border border-gray-300 rounded focus:outline-none focus:border-indigo-500 text-sm"
+                                                    />
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-6">
+                            <div className="bg-white rounded-xl shadow-lg p-6 text-center">
+                                <div className="text-3xl font-bold text-indigo-600">{tasks.filter(t => t.completed).length}</div>
+                                <div className="text-gray-600 mt-1">Tasks Completed</div>
+                            </div>
+                            <div className="bg-white rounded-xl shadow-lg p-6 text-center">
+                                <div className="text-3xl font-bold text-purple-600">{tasks.filter(t => !t.completed).length}</div>
+                                <div className="text-gray-600 mt-1">Tasks Remaining</div>
+                            </div>
+                            <div className="bg-white rounded-xl shadow-lg p-6 text-center">
+                                <div className="text-3xl font-bold text-green-600">{tasks.length}</div>
+                                <div className="text-gray-600 mt-1">Total Tasks</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        const getTypeStyle = (type) => {
+            switch (type) {
+                case 'Reading': return 'bg-blue-100 text-blue-700';
+                case 'Coding': return 'bg-green-100 text-green-700';
+                case 'Project': return 'bg-purple-100 text-purple-700';
+                case 'Study': return 'bg-yellow-100 text-yellow-700';
+                default: return 'bg-gray-100 text-gray-700';
+            }
+        };
+
+        const getTypeIcon = (type) => {
+            switch (type) {
+                case 'Reading': return <BookOpen />;
+                case 'Coding': return <Code />;
+                case 'Project': return <Target />;
+                case 'Study': return <Calendar />;
+                default: return null;
+            }
+        };
+
+        const initialTasks = [
+            { id: 1, phase: 'Phase 1', week: 'Week 1', type: 'Reading', description: 'Review propositional and predicate logic', completed: false, notes: '' },
+            { id: 2, phase: 'Phase 1', week: 'Week 1', type: 'Reading', description: 'Read Software Foundations Vol 1 - Chapters 1-3', completed: false, notes: '' },
+            { id: 3, phase: 'Phase 1', week: 'Week 1', type: 'Reading', description: 'Study Basic Category Theory - Chapters 1-2', completed: false, notes: '' },
+            { id: 4, phase: 'Phase 1', week: 'Week 1', type: 'Coding', description: 'Install Lean 4 from lean-lang.org', completed: false, notes: '' },
+            { id: 5, phase: 'Phase 1', week: 'Week 1', type: 'Coding', description: 'Complete exercises from Theorem Proving in Lean 4', completed: false, notes: '' },
+            { id: 6, phase: 'Phase 1', week: 'Week 1', type: 'Coding', description: 'Write proof: ∀ p q : Prop, p ∧ q → q ∧ p', completed: false, notes: '' },
+            { id: 7, phase: 'Phase 1', week: 'Week 2', type: 'Study', description: 'Deepen understanding of quantifiers and implication', completed: false, notes: '' },
+            { id: 8, phase: 'Phase 1', week: 'Week 2', type: 'Reading', description: 'Study Basic Category Theory - Chapters 3-4', completed: false, notes: '' },
+            { id: 9, phase: 'Phase 1', week: 'Week 2', type: 'Coding', description: 'Learn Lean tactics: intro, apply, rw, simp, cases, induction', completed: false, notes: '' },
+            { id: 10, phase: 'Phase 1', week: 'Week 2', type: 'Project', description: 'Prove associativity of addition for natural numbers', completed: false, notes: '' },
+            { id: 11, phase: 'Phase 1', week: 'Week 2', type: 'Project', description: 'Prove commutativity of multiplication', completed: false, notes: '' },
+            { id: 12, phase: 'Phase 1', week: 'Week 3', type: 'Study', description: 'Dive into Lean type theory: propositions-as-types, dependent types', completed: false, notes: '' },
+            { id: 13, phase: 'Phase 1', week: 'Week 3', type: 'Reading', description: 'Read Lean mathlib documentation', completed: false, notes: '' },
+            { id: 14, phase: 'Phase 1', week: 'Week 3', type: 'Reading', description: 'Study Basic Category Theory Ch 5-6: universal properties & adjoints', completed: false, notes: '' },
+            { id: 15, phase: 'Phase 1', week: 'Week 3', type: 'Coding', description: 'Prove distributivity a*(b + c) = a*b + a*c in Lean', completed: false, notes: '' },
+            { id: 16, phase: 'Phase 1', week: 'Week 3', type: 'Coding', description: 'Write custom tactics using Lean meta-programming API', completed: false, notes: '' },
+            { id: 17, phase: 'Phase 1', week: 'Week 4', type: 'Study', description: 'Explore automation in Lean: auto, linarith, ring', completed: false, notes: '' },
+            { id: 18, phase: 'Phase 1', week: 'Week 4', type: 'Reading', description: 'Read Lean 4 metaprogramming book', completed: false, notes: '' },
+            { id: 19, phase: 'Phase 1', week: 'Week 4', type: 'Reading', description: 'Review Yoneda lemma intuition (Leinster Ch 7)', completed: false, notes: '' },
+            { id: 20, phase: 'Phase 1', week: 'Week 4', type: 'Project', description: 'Formalize Peano arithmetic axioms and prove lemmas', completed: false, notes: '' },
+            { id: 21, phase: 'Phase 2', week: 'Week 5', type: 'Study', description: 'Study how Coq/Lean encode logical inference', completed: false, notes: '' },
+            { id: 22, phase: 'Phase 2', week: 'Week 5', type: 'Reading', description: 'Read about SMT solvers (Z3, E-prover)', completed: false, notes: '' },
+            { id: 23, phase: 'Phase 2', week: 'Week 5', type: 'Coding', description: 'Integrate Python with Z3 (z3-solver package)', completed: false, notes: '' },
+            { id: 24, phase: 'Phase 2', week: 'Week 5', type: 'Coding', description: 'Write Python script using Z3 to prove logical formulas', completed: false, notes: '' },
+            { id: 25, phase: 'Phase 2', week: 'Week 6', type: 'Study', description: 'Study symbolic reasoning with SymPy', completed: false, notes: '' },
+            { id: 26, phase: 'Phase 2', week: 'Week 6', type: 'Study', description: 'Explore differences between symbolic tools and proof assistants', completed: false, notes: '' },
+            { id: 27, phase: 'Phase 2', week: 'Week 6', type: 'Study', description: 'Learn Lean simp and rewriting system', completed: false, notes: '' },
+            { id: 28, phase: 'Phase 2', week: 'Week 6', type: 'Project', description: 'Build Python-SymPy-Lean bridge script', completed: false, notes: '' },
+            { id: 29, phase: 'Phase 2', week: 'Week 7', type: 'Reading', description: 'Read about proof search and resolution algorithms', completed: false, notes: '' },
+            { id: 30, phase: 'Phase 2', week: 'Week 7', type: 'Reading', description: 'Read GamePad paper (DeepMind)', completed: false, notes: '' },
+            { id: 31, phase: 'Phase 2', week: 'Week 7', type: 'Coding', description: 'Generate and visualize Lean proof trees manually', completed: false, notes: '' },
+            { id: 32, phase: 'Phase 2', week: 'Week 7', type: 'Coding', description: 'Export Lean proof trees to JSON', completed: false, notes: '' },
+            { id: 33, phase: 'Phase 2', week: 'Week 7', type: 'Coding', description: 'Parse and visualize proof trees in Python (networkx)', completed: false, notes: '' },
+            { id: 34, phase: 'Phase 2', week: 'Week 8', type: 'Reading', description: 'Read about tactic prediction in ML (GPT-f or LeanDojo papers)', completed: false, notes: '' },
+            { id: 35, phase: 'Phase 2', week: 'Week 8', type: 'Coding', description: 'Set up LeanDojo (Python + Lean 4)', completed: false, notes: '' },
+            { id: 36, phase: 'Phase 2', week: 'Week 8', type: 'Coding', description: 'Extract proof data from mathlib', completed: false, notes: '' },
+            { id: 37, phase: 'Phase 2', week: 'Week 8', type: 'Study', description: 'Inspect LeanDojo data structure (AST, tactics, lemmas)', completed: false, notes: '' },
+            { id: 38, phase: 'Phase 3', week: 'Week 9-10', type: 'Reading', description: 'Read LeanDojo paper', completed: false, notes: '' },
+            { id: 39, phase: 'Phase 3', week: 'Week 9-10', type: 'Coding', description: 'Install LeanDojo and explore examples', completed: false, notes: '' },
+            { id: 40, phase: 'Phase 3', week: 'Week 9-10', type: 'Study', description: 'Understand dataset structure (proof step prediction)', completed: false, notes: '' },
+            { id: 41, phase: 'Phase 3', week: 'Week 9-10', type: 'Coding', description: 'Extract proof traces using LeanDojo API', completed: false, notes: '' },
+            { id: 42, phase: 'Phase 3', week: 'Week 9-10', type: 'Project', description: 'Implement baseline model (logistic regression/MLP) for tactic prediction', completed: false, notes: '' },
+            { id: 43, phase: 'Phase 3', week: 'Week 11-12', type: 'Study', description: 'Learn PyTorch basics', completed: false, notes: '' },
+            { id: 44, phase: 'Phase 3', week: 'Week 11-12', type: 'Coding', description: 'Implement transformer encoder for proof tokens', completed: false, notes: '' },
+            { id: 45, phase: 'Phase 3', week: 'Week 11-12', type: 'Project', description: 'Train model on LeanDojo data (small mathlib subset)', completed: false, notes: '' },
+            { id: 46, phase: 'Phase 3', week: 'Week 13-14', type: 'Project', description: 'Evaluate model on held-out theorems', completed: false, notes: '' },
+            { id: 47, phase: 'Phase 3', week: 'Week 13-14', type: 'Study', description: 'Visualize prediction successes/failures', completed: false, notes: '' },
+            { id: 48, phase: 'Phase 3', week: 'Week 13-14', type: 'Reading', description: 'Read MiniF2F benchmark paper', completed: false, notes: '' },
+            { id: 49, phase: 'Phase 3', week: 'Week 13-14', type: 'Project', description: 'Fine-tune model on miniF2F dataset', completed: false, notes: '' },
+            { id: 50, phase: 'Phase 3', week: 'Week 15-16', type: 'Project', description: 'Incorporate symbolic reasoning in predictions', completed: false, notes: '' },
+            { id: 51, phase: 'Phase 3', week: 'Week 15-16', type: 'Project', description: 'Implement hybrid ML-symbolic approach', completed: false, notes: '' },
+            { id: 52, phase: 'Phase 3', week: 'Week 15-16', type: 'Project', description: 'Build symbolic proof verifier for ML-suggested tactics', completed: false, notes: '' },
+            { id: 53, phase: 'Phase 4', week: 'Week 17-18', type: 'Reading', description: 'Study AlphaGeometry (Nature 2024)', completed: false, notes: '' },
+            { id: 54, phase: 'Phase 4', week: 'Week 17-18', type: 'Reading', description: 'Study GPT-f (Meta AI)', completed: false, notes: '' },
+            { id: 55, phase: 'Phase 4', week: 'Week 17-18', type: 'Project', description: 'Reproduce small-scale proof synthesis example', completed: false, notes: '' },
+            { id: 56, phase: 'Phase 4', week: 'Week 17-18', type: 'Project', description: 'Generate automatic proof for Lean theorem (e.g., n + 0 = n)', completed: false, notes: '' },
+            { id: 57, phase: 'Phase 4', week: 'Week 19-20', type: 'Project', description: 'Extend model to graph-based reasoning', completed: false, notes: '' },
+            { id: 58, phase: 'Phase 4', week: 'Week 19-20', type: 'Reading', description: 'Read GNN for Theorem Proving paper (ICLR 2022)', completed: false, notes: '' },
+            { id: 59, phase: 'Phase 4', week: 'Week 19-20', type: 'Coding', description: 'Implement GNN using PyTorch Geometric', completed: false, notes: '' },
+            { id: 60, phase: 'Phase 4', week: 'Week 21-22', type: 'Project', description: 'Optimize model using symbolic loss functions', completed: false, notes: '' },
+            { id: 61, phase: 'Phase 4', week: 'Week 21-22', type: 'Study', description: 'Include category-theoretic structure in representations', completed: false, notes: '' },
+            { id: 62, phase: 'Phase 4', week: 'Week 21-22', type: 'Project', description: 'Formalize basic category theory in Lean', completed: false, notes: '' },
+            { id: 63, phase: 'Phase 4', week: 'Week 23-24', type: 'Project', description: 'Write research-style report on problem explored', completed: false, notes: '' },
+            { id: 64, phase: 'Phase 4', week: 'Week 23-24', type: 'Project', description: 'Document dataset, model, and evaluation', completed: false, notes: '' }
+        ];
+
+        ReactDOM.render(<TheoremProvingTracker />, document.getElementById('root'));
+    </script>
+</body>
+</html>
