@@ -1,402 +1,1046 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Theorem Proving Roadmap Tracker</title>
-    <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
-    <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.5/babel.min.js"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="UTF-8">
+  <title>Formal Methods + Lean + ML/AI Roadmap (Deliverable-First)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    :root {
+      --bg: #ffffff;
+      --fg: #000000;
+      --border: #d0d0d0;
+      --header-bg: #000000;
+      --header-fg: #ffffff;
+      --accent: #111111;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      color: var(--fg);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.5;
+    }
+
+    .wrapper {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 24px 16px 48px;
+    }
+
+    h1 {
+      font-size: 1.8rem;
+      margin: 0 0 0.25rem;
+      font-weight: 600;
+    }
+
+    h2 {
+      font-size: 1.1rem;
+      font-weight: 500;
+      margin: 1.5rem 0 0.5rem;
+      color: var(--accent);
+    }
+
+    .subtitle {
+      font-size: 0.95rem;
+      color: #555;
+      margin-bottom: 1rem;
+    }
+
+    .meta {
+      font-size: 0.8rem;
+      color: #777;
+      margin-bottom: 1.25rem;
+    }
+
+    .legend {
+      font-size: 0.8rem;
+      color: #555;
+      margin-bottom: 0.75rem;
+    }
+
+    .legend span {
+      display: inline-block;
+      margin-right: 12px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed; /* ensures wrapping */
+      border: 1px solid var(--border);
+      font-size: 0.85rem;
+    }
+
+    thead {
+      background: var(--header-bg);
+      color: var(--header-fg);
+    }
+
+    th, td {
+      border: 1px solid var(--border);
+      padding: 8px 6px;
+      vertical-align: top;
+      word-wrap: break-word;
+      white-space: normal;
+    }
+
+    th {
+      text-align: left;
+      font-weight: 500;
+    }
+
+    tr:nth-child(even) td {
+      background: #fafafa;
+    }
+
+    tr:nth-child(odd) td {
+      background: #ffffff;
+    }
+
+    .col-week {
+      width: 50px;
+    }
+
+    .col-stage {
+      width: 120px;
+    }
+
+    .col-hours {
+      width: 60px;
+      text-align: center;
+    }
+
+    .col-completed {
+      width: 70px;
+      text-align: center;
+    }
+
+    .col-remarks {
+      width: 140px;
+    }
+
+    input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+    }
+
+    .small-note {
+      font-size: 0.8rem;
+      color: #777;
+      margin-top: 0.5rem;
+    }
+
+    @media (max-width: 768px) {
+      table {
+        font-size: 0.8rem;
+      }
+      h1 {
+        font-size: 1.4rem;
+      }
+    }
+  </style>
 </head>
 <body>
-    <div id="root"></div>
+  <div class="wrapper">
+    <h1>Formal Methods + Lean + ML/AI Roadmap</h1>
+    <div class="subtitle">
+      42-week plan: build strong foundations in formal methods & mathematics while continuously shipping small, visible projects (Lean repos, ML notebooks, AI-for-Lean tools).
+    </div>
+    <div class="meta">
+      Stages: S1 Lean Basics · S2 Math + Lean · S3 Formal Methods · S4 ML Foundations · S5 AI-for-Lean · S6 Integration & Portfolio.
+    </div>
 
-    <script type="text/babel">
-        const { useState, useEffect } = React;
+    <div class="legend">
+      <span><strong>Hours/week:</strong> suggested 7–10 hours</span>
+      <span><strong>Deliverable:</strong> something you can show on GitHub/blog every few weeks</span>
+      <span><strong>Remarks:</strong> blockers, ideas, or links</span>
+    </div>
 
-        // Storage polyfill for GitHub Pages
-        const storage = {
-            get: (key) => {
-                try {
-                    const item = localStorage.getItem(key);
-                    return item ? { key, value: item, shared: false } : null;
-                } catch (e) {
-                    return null;
-                }
-            },
-            set: (key, value) => {
-                try {
-                    localStorage.setItem(key, value);
-                    return { key, value, shared: false };
-                } catch (e) {
-                    return null;
-                }
-            }
-        };
+    <h2>Week-by-Week Plan (with Deliverables)</h2>
 
-        const CheckCircle2 = () => (
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                <polyline points="22 4 12 14.01 9 11.01"></polyline>
-            </svg>
-        );
+    <table>
+      <thead>
+        <tr>
+          <th class="col-week">Week</th>
+          <th class="col-stage">Stage</th>
+          <th>Primary Focus</th>
+          <th>Goals for the Week</th>
+          <th>Deliverable (GitHub / Blog / Notes)</th>
+          <th>Core References / Resources</th>
+          <th class="col-hours">Hours</th>
+          <th class="col-completed">Done</th>
+          <th class="col-remarks">Remarks</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- STAGE 1: LEAN BASICS & LOGIC (Weeks 1–8) -->
+        <tr>
+          <td>1</td>
+          <td>S1 — Lean Basics</td>
+          <td>Environment setup & orientation</td>
+          <td>
+            Install Lean 4 and VS Code extension.  
+            Run a sample Lean project.  
+            Skim "Theorem Proving in Lean 4" (TPiL4) table of contents.
+          </td>
+          <td>
+            Create private GitHub repo <em>lean-notes</em> (or similar) and push a simple "hello Lean" file.
+          </td>
+          <td>
+            - Lean 4 docs  
+            - TPiL4 (intro)  
+            - Lean community Zulip
+          </td>
+          <td class="col-hours">5–7</td>
+          <td class="col-completed"><input type="checkbox"></td>
+          <td></td>
+        </tr>
 
-        const Circle = () => (
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <circle cx="12" cy="12" r="10"></circle>
-            </svg>
-        );
+        <tr>
+          <td>2</td>
+          <td>S1 — Lean Basics</td>
+          <td>Propositional logic in Lean</td>
+          <td>
+            Work through basic propositions in TPiL4.  
+            Practice <code>intro</code>, <code>apply</code>, <code>exact</code>, <code>cases</code>.  
+            Prove 5–10 small theorems in Lean.
+          </td>
+          <td>
+            Commit <em>week2-propositions.lean</em> with all exercises & comments.
+          </td>
+          <td>
+            - TPiL4: Propositions  
+            - Kevin Buzzard Lean intro videos
+          </td>
+          <td class="col-hours">7–9</td>
+          <td class="col-completed"><input type="checkbox"></td>
+          <td></td>
+        </tr>
 
-        const Download = () => (
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                <polyline points="7 10 12 15 17 10"></polyline>
-                <line x1="12" y1="15" x2="12" y2="3"></line>
-            </svg>
-        );
+        <tr>
+          <td>3</td>
+          <td>S1 — Lean Basics</td>
+          <td>Quantifiers & sets</td>
+          <td>
+            Practice ∀ / ∃ proofs.  
+            Work with basic set operations and identities.  
+            Use <code>rw</code> extensively.
+          </td>
+          <td>
+            A Lean file <em>week3-sets-quantifiers.lean</em> with 5–8 cleaned-up proofs.
+          </td>
+          <td>
+            - TPiL4: Quantifiers, Sets  
+            - Velleman: quantifiers chapter
+          </td>
+          <td class="col-hours">7–9</td>
+          <td class="col-completed"><input type="checkbox"></td>
+          <td></td>
+        </tr>
 
-        const BookOpen = () => (
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
-            </svg>
-        );
+        <tr>
+          <td>4</td>
+          <td>S1 — Lean Basics</td>
+          <td>Induction + natural numbers</td>
+          <td>
+            Implement simple recursive functions on ℕ.  
+            Prove 3–5 classic induction lemmas (sum of first n, etc.) in Lean.
+          </td>
+          <td>
+            <em>week4-induction.lean</em> + a one-page markdown note <em>induction-tips.md</em>.
+          </td>
+          <td>
+            - TPiL4: Induction  
+            - Book of Proof: induction section
+          </td>
+          <td class="col-hours">7–10</td>
+          <td class="col-completed"><input type="checkbox"></td>
+          <td></td>
+        </tr>
 
-        const Code = () => (
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <polyline points="16 18 22 12 16 6"></polyline>
-                <polyline points="8 6 2 12 8 18"></polyline>
-            </svg>
-        );
+        <tr>
+          <td>5</td>
+          <td>S1 — Lean Basics</td>
+          <td>Functional programming in Lean</td>
+          <td>
+            Implement functions on lists (map-like, filter-like).  
+            Prove at least 2 properties (e.g., length after append).
+          </td>
+          <td>
+            Small Lean module <em>week5-fp.lean</em> + GitHub README section "Lean FP mini-examples".
+          </td>
+          <td>
+            - Functional Programming in Lean (early chapters)  
+            - TPiL4: functions & types
+          </td>
+          <td class="col-hours">7–9</td>
+          <td class="col-completed"><input type="checkbox"></td>
+          <td></td>
+        </tr>
 
-        const Target = () => (
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <circle cx="12" cy="12" r="10"></circle>
-                <circle cx="12" cy="12" r="6"></circle>
-                <circle cx="12" cy="12" r="2"></circle>
-            </svg>
-        );
+        <tr>
+          <td>6</td>
+          <td>S1 — Lean Basics</td>
+          <td>Tactics & automation</td>
+          <td>
+            Learn and practice <code>simp</code>, <code>linarith</code>, <code>ring</code>.  
+            Redo some older proofs using these tactics.
+          </td>
+          <td>
+            <em>tactic-cheatsheet.md</em> in repo with annotated examples of each tactic.
+          </td>
+          <td>
+            - TPiL4: tactics chapter  
+            - Lean docs for tactics
+          </td>
+          <td class="col-hours">6–8</td>
+          <td class="col-completed"><input type="checkbox"></td>
+          <td></td>
+        </tr>
 
-        const Calendar = () => (
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                <line x1="16" y1="2" x2="16" y2="6"></line>
-                <line x1="8" y1="2" x2="8" y2="6"></line>
-                <line x1="3" y1="10" x2="21" y2="10"></line>
-            </svg>
-        );
+        <tr>
+          <td>7</td>
+          <td>S1 — Lean Basics</td>
+          <td>Paper proofs vs Lean proofs</td>
+          <td>
+            Solve 8–10 logic problems on paper, then re-implement 4–5 in Lean.  
+            Focus on clean structure and comments.
+          </td>
+          <td>
+            <em>week7-paper-vs-lean.pdf</em> (scan/photo) + matching <em>week7-lean.lean</em>.
+          </td>
+          <td>
+            - Velleman / Book of Proof logic problems  
+            - TPiL4: relevant sections
+          </td>
+          <td class="col-hours">6–8</td>
+          <td class="col-completed"><input type="checkbox"></td>
+          <td></td>
+        </tr>
 
-        const TheoremProvingTracker = () => {
-            const [tasks, setTasks] = useState(initialTasks);
-            const [filter, setFilter] = useState('all');
+        <tr>
+          <td>8</td>
+          <td>S1 — Lean Basics</td>
+          <td>Stage review + mini-showcase</td>
+          <td>
+            Review all Lean basics.  
+            Pick your 3 favourite Lean proofs and polish them for readability.
+          </td>
+          <td>
+            Public GitHub repo <em>lean-basics-showcase</em> with 3–5 best beginner proofs and a short README.
+          </td>
+          <td>
+            - Your previous Lean files  
+            - Any feedback from Zulip, if posted
+          </td>
+          <td class="col-hours">5–7</td>
+          <td class="col-completed"><input type="checkbox"></td>
+          <td></td>
+        </tr>
 
-            useEffect(() => {
-                const saved = storage.get('theorem-proving-tasks');
-                if (saved) {
-                    try {
-                        setTasks(JSON.parse(saved.value));
-                    } catch (e) {
-                        console.error('Failed to load saved tasks');
-                    }
-                }
-            }, []);
+        <!-- STAGE 2: MATH + LEAN INTEGRATION (Weeks 9–16) -->
+        <tr>
+          <td>9</td>
+          <td>S2 — Math + Lean</td>
+          <td>Mathlib navigation</td>
+          <td>
+            Learn how mathlib is organized.  
+            Practice finding lemmas with <code>search?</code> or documentation tools.
+          </td>
+          <td>
+            Short markdown file <em>mathlib-notes.md</em> with patterns you discover for navigating lemmas.
+          </td>
+          <td>
+            - Mathematics in Lean (intro)  
+            - mathlib docs
+          </td>
+          <td class="col-hours">6–8</td>
+          <td class="col-completed"><input type="checkbox"></td>
+          <td></td>
+        </tr>
 
-            const saveTasks = (updatedTasks) => {
-                storage.set('theorem-proving-tasks', JSON.stringify(updatedTasks));
-                setTasks(updatedTasks);
-            };
+        <tr>
+          <td>10</td>
+          <td>S2 — Math + Lean</td>
+          <td>Sets, functions, relations</td>
+          <td>
+            Work through sets/functions in Mathematics in Lean.  
+            Formalize 3–5 textbook propositions.
+          </td>
+          <td>
+            <em>week10-sets-functions.lean</em> with comments mapping each theorem to book statement.
+          </td>
+          <td>
+            - Mathematics in Lean: sets & functions  
+            - Tao or Velleman: sets chapter
+          </td>
+          <td class="col-hours">7–9</td>
+          <td class="col-completed"><input type="checkbox"></td>
+          <td></td>
+        </tr>
 
-            const toggleTask = (id) => {
-                const updated = tasks.map(task =>
-                    task.id === id ? { ...task, completed: !task.completed } : task
-                );
-                saveTasks(updated);
-            };
+        <tr>
+          <td>11</td>
+          <td>S2 — Math + Lean</td>
+          <td>Elementary algebra in Lean</td>
+          <td>
+            Explore groups or rings in mathlib.  
+            Formalize basic group identities or ring equalities.
+          </td>
+          <td>
+            <em>algebra-snippets.lean</em> + a README section "Algebra with Lean".
+          </td>
+          <td>
+            - Mathematics in Lean: algebra  
+            - Dummit & Foote: early group theory
+          </td>
+          <td class="col-hours">7–9</td>
+          <td class="col-completed"><input type="checkbox"></td>
+          <td></td>
+        </tr>
 
-            const updateNotes = (id, notes) => {
-                const updated = tasks.map(task =>
-                    task.id === id ? { ...task, notes } : task
-                );
-                saveTasks(updated);
-            };
+        <tr>
+          <td>12</td>
+          <td>S2 — Math + Lean</td>
+          <td>Real analysis basics</td>
+          <td>
+            Formalize simple analytic facts (e.g., monotone sequences, simple inequalities).  
+            Compare Lean versions to Tao's text proofs.
+          </td>
+          <td>
+            <em>analysis-mini.lean</em> + 0.5–1 page note "analysis-in-lean.md".
+          </td>
+          <td>
+            - Mathematics in Lean: analysis  
+            - Tao, Analysis I (early chapters)
+          </td>
+          <td class="col-hours">7–10</td>
+          <td class="col-completed"><input type="checkbox"></td>
+          <td></td>
+        </tr>
 
-            const getProgress = (phase) => {
-                const phaseTasks = tasks.filter(t => t.phase === phase);
-                const completed = phaseTasks.filter(t => t.completed).length;
-                return phaseTasks.length > 0 ? Math.round((completed / phaseTasks.length) * 100) : 0;
-            };
+        <tr>
+          <td>13</td>
+          <td>S2 — Math + Lean</td>
+          <td>Logic for CS (theory)</td>
+          <td>
+            Study propositional and first-order logic semantics.  
+            Translate 3–4 exercises into Lean statements.
+          </td>
+          <td>
+            <em>logic-notes.md</em> linking each theoretical concept to Lean examples from your repo.
+          </td>
+          <td>
+            - Huth & Ryan: intro chapters  
+            - Gallier: notes on logic
+          </td>
+          <td class="col-hours">6–8</td>
+          <td class="col-completed"><input type="checkbox"></td>
+          <td></td>
+        </tr>
 
-            const getTotalProgress = () => {
-                const completed = tasks.filter(t => t.completed).length;
-                return Math.round((completed / tasks.length) * 100);
-            };
+        <tr>
+          <td>14</td>
+          <td>S2 — Math + Lean</td>
+          <td>Problem set sprint</td>
+          <td>
+            Solve 15–20 proof problems (pure math).  
+            Implement at least 8 in Lean with clear structure.
+          </td>
+          <td>
+            <em>week14-problemset.lean</em> + small index at top listing all problems solved.
+          </td>
+          <td>
+            - Velleman / Book of Proof problems  
+            - Your math textbooks
+          </td>
+          <td class="col-hours">7–9</td>
+          <td class="col-completed"><input type="checkbox"></td>
+          <td></td>
+        </tr>
 
-            const exportToCSV = () => {
-                const headers = ['Phase', 'Week', 'Task Type', 'Description', 'Status', 'Notes'];
-                const rows = tasks.map(t => [
-                    t.phase,
-                    t.week,
-                    t.type,
-                    t.description.replace(/,/g, ';'),
-                    t.completed ? 'Complete' : 'Pending',
-                    (t.notes || '').replace(/,/g, ';')
-                ]);
-                
-                const csv = [headers, ...rows].map(row => row.join(',')).join('\n');
-                const blob = new Blob([csv], { type: 'text/csv' });
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = 'theorem-proving-roadmap.csv';
-                a.click();
-            };
+        <tr>
+          <td>15</td>
+          <td>S2 — Math + Lean</td>
+          <td>Mini math chapter formalization (part 1)</td>
+          <td>
+            Choose a small coherent topic (e.g., sequences, vector spaces).  
+            Define core objects and prove 3–4 lemmas.
+          </td>
+          <td>
+            New public repo <em>lean-mini-chapter</em> initialized with structure & first lemmas.
+          </td>
+          <td>
+            - Mathematics in Lean (matching section)  
+            - Tao, Axler, or similar textbook
+          </td>
+          <td class="col-hours">7–10</td>
+          <td class="col-completed"><input type="checkbox"></td>
+          <td></td>
+        </tr>
 
-            const filteredTasks = tasks.filter(task => {
-                if (filter === 'all') return true;
-                if (filter === 'completed') return task.completed;
-                if (filter === 'pending') return !task.completed;
-                return task.phase === filter;
-            });
+        <tr>
+          <td>16</td>
+          <td>S2 — Math + Lean</td>
+          <td>Mini math chapter (part 2) & stage review</td>
+          <td>
+            Add more results and clean up proofs.  
+            Write a high-level description of the chapter you formalized.
+          </td>
+          <td>
+            Updated <em>lean-mini-chapter</em> repo + markdown <em>CHAPTER.md</em> explaining what’s formalized.
+          </td>
+          <td>
+            - Your mini-chapter repo  
+            - mathlib files for reference
+          </td>
+          <td class="col-hours">6–8</td>
+          <td class="col-completed"><input type="checkbox"></td>
+          <td></td>
+        </tr>
 
-            const phases = ['Phase 1', 'Phase 2', 'Phase 3', 'Phase 4'];
+        <!-- STAGE 3: FORMAL METHODS INTRO (Weeks 17–22) -->
+        <tr>
+          <td>17</td>
+          <td>S3 — Formal Methods</td>
+          <td>Software Foundations intro</td>
+          <td>
+            Start Software Foundations (SF) Vol 1.  
+            Understand inductive definitions and simple proofs in Coq (or map ideas to Lean).
+          </td>
+          <td>
+            Repo folder <em>sf-notes/</em> with first Coq/Lean exercises mirrored.
+          </td>
+          <td>
+            - Software Foundations Vol 1  
+            - Coq / Lean documentation
+          </td>
+          <td class="col-hours">7–8</td>
+          <td class="col-completed"><input type="checkbox"></td>
+          <td></td>
+        </tr>
 
-            return (
-                <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 p-6">
-                    <div className="max-w-7xl mx-auto">
-                        <div className="bg-white rounded-xl shadow-lg p-6 mb-6">
-                            <div className="flex items-center justify-between mb-4 flex-wrap gap-4">
-                                <div>
-                                    <h1 className="text-3xl font-bold text-gray-900 mb-2">
-                                        🧭 Symbolic ML for Theorem Proving
-                                    </h1>
-                                    <p className="text-gray-600">6-Month Learning Roadmap Tracker</p>
-                                </div>
-                                <button
-                                    onClick={exportToCSV}
-                                    className="flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
-                                >
-                                    <Download />
-                                    Export CSV
-                                </button>
-                            </div>
-                            
-                            <div className="mb-4">
-                                <div className="flex justify-between text-sm text-gray-600 mb-1">
-                                    <span>Overall Progress</span>
-                                    <span className="font-semibold">{getTotalProgress()}%</span>
-                                </div>
-                                <div className="w-full bg-gray-200 rounded-full h-3">
-                                    <div
-                                        className="bg-gradient-to-r from-indigo-500 to-purple-500 h-3 rounded-full transition-all duration-500"
-                                        style={{ width: `${getTotalProgress()}%` }}
-                                    />
-                                </div>
-                            </div>
+        <tr>
+          <td>18</td>
+          <td>S3 — Formal Methods</td>
+          <td>Tiny language semantics (part 1)</td>
+          <td>
+            Define a tiny arithmetic expression language in Lean.  
+            Write a small interpreter / evaluator function.
+          </td>
+          <td>
+            Lean module <em>tiny-lang.lean</em> with syntax + eval and simple tests.
+          </td>
+          <td>
+            - SF semantics chapters  
+            - TAPL (early chapters, optional)
+          </td>
+          <td class="col-hours">7–9</td>
+          <td class="col-completed"><input type="checkbox"></td>
+          <td></td>
+        </tr>
 
-                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                                {phases.map((phase) => (
-                                    <div key={phase} className="bg-gray-50 rounded-lg p-3">
-                                        <div className="text-sm font-semibold text-gray-700 mb-2">{phase}</div>
-                                        <div className="w-full bg-gray-200 rounded-full h-2">
-                                            <div
-                                                className="bg-indigo-500 h-2 rounded-full transition-all"
-                                                style={{ width: `${getProgress(phase)}%` }}
-                                            />
-                                        </div>
-                                        <div className="text-xs text-gray-500 mt-1">{getProgress(phase)}%</div>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
+        <tr>
+          <td>19</td>
+          <td>S3 — Formal Methods</td>
+          <td>Tiny language semantics (part 2)</td>
+          <td>
+            State and prove simple properties (e.g., determinism, preservation of value).  
+            Focus on structuring bigger proofs in Lean.
+          </td>
+          <td>
+            Updated <em>tiny-lang.lean</em> with 2–3 theorems + short <em>tiny-lang-notes.md</em>.
+          </td>
+          <td>
+            - Your tiny language file  
+            - SF / TAPL proofs for inspiration
+          </td>
+          <td class="col-hours">7–9</td>
+          <td class="col-completed"><input type="checkbox"></td>
+          <td></td>
+        </tr>
 
-                        <div className="bg-white rounded-xl shadow-lg p-4 mb-6">
-                            <div className="flex flex-wrap gap-2">
-                                {['all', 'pending', 'completed', ...phases].map((f) => (
-                                    <button
-                                        key={f}
-                                        onClick={() => setFilter(f)}
-                                        className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                                            filter === f
-                                                ? 'bg-indigo-600 text-white'
-                                                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                                        }`}
-                                    >
-                                        {f.charAt(0).toUpperCase() + f.slice(1)}
-                                    </button>
-                                ))}
-                            </div>
-                        </div>
+        <tr>
+          <td>20</td>
+          <td>S3 — Formal Methods</td>
+          <td>Mathlib contribution preparation</td>
+          <td>
+            Identify a small lemma or definition that could fit in mathlib.  
+            Discuss on Zulip for guidance.
+          </td>
+          <td>
+            Draft Lean file <em>candidate-mathlib-lemma.lean</em> + Zulip link in Remarks.
+          </td>
+          <td>
+            - mathlib contributing guide  
+            - Lean Zulip (mathlib stream)
+          </td>
+          <td class="col-hours">6–8</td>
+          <td class="col-completed"><input type="checkbox"></td>
+          <td></td>
+        </tr>
 
-                        <div className="bg-white rounded-xl shadow-lg overflow-hidden">
-                            <div className="overflow-x-auto">
-                                <table className="w-full">
-                                    <thead className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white">
-                                        <tr>
-                                            <th className="px-4 py-3 text-left text-sm font-semibold">✓</th>
-                                            <th className="px-4 py-3 text-left text-sm font-semibold">Phase</th>
-                                            <th className="px-4 py-3 text-left text-sm font-semibold">Week</th>
-                                            <th className="px-4 py-3 text-left text-sm font-semibold">Type</th>
-                                            <th className="px-4 py-3 text-left text-sm font-semibold">Description</th>
-                                            <th className="px-4 py-3 text-left text-sm font-semibold">Notes</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {filteredTasks.map((task) => (
-                                            <tr
-                                                key={task.id}
-                                                className={`border-b border-gray-100 hover:bg-gray-50 transition-colors ${
-                                                    task.completed ? 'bg-green-50' : ''
-                                                }`}
-                                            >
-                                                <td className="px-4 py-3">
-                                                    <button
-                                                        onClick={() => toggleTask(task.id)}
-                                                        className="hover:scale-110 transition-transform"
-                                                    >
-                                                        {task.completed ? (
-                                                            <div className="text-green-600"><CheckCircle2 /></div>
-                                                        ) : (
-                                                            <div className="text-gray-400"><Circle /></div>
-                                                        )}
-                                                    </button>
-                                                </td>
-                                                <td className="px-4 py-3">
-                                                    <span className="inline-block px-3 py-1 bg-indigo-100 text-indigo-700 rounded-full text-sm font-medium">
-                                                        {task.phase}
-                                                    </span>
-                                                </td>
-                                                <td className="px-4 py-3 text-gray-700 font-medium">{task.week}</td>
-                                                <td className="px-4 py-3">
-                                                    <span className={`inline-flex items-center gap-1 px-2 py-1 rounded text-sm ${getTypeStyle(task.type)}`}>
-                                                        {getTypeIcon(task.type)}
-                                                        {task.type}
-                                                    </span>
-                                                </td>
-                                                <td className="px-4 py-3 text-gray-800">{task.description}</td>
-                                                <td className="px-4 py-3">
-                                                    <input
-                                                        type="text"
-                                                        value={task.notes || ''}
-                                                        onChange={(e) => updateNotes(task.id, e.target.value)}
-                                                        placeholder="Add notes..."
-                                                        className="w-full px-2 py-1 border border-gray-300 rounded focus:outline-none focus:border-indigo-500 text-sm"
-                                                    />
-                                                </td>
-                                            </tr>
-                                        ))}
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
+        <tr>
+          <td>21</td>
+          <td>S3 — Formal Methods</td>
+          <td>First tiny PR or external snippet</td>
+          <td>
+            Convert your candidate lemma into a proper PR (if feasible), or publish as a clean Gist/repo if PR is not ready.
+          </td>
+          <td>
+            Link to first mathlib PR or public <em>lean-snippet</em> repo with documentation.
+          </td>
+          <td>
+            - GitHub PR interface  
+            - Existing small mathlib PRs as examples
+          </td>
+          <td class="col-hours">6–8</td>
+          <td class="col-completed"><input type="checkbox"></td>
+          <td></td>
+        </tr>
 
-                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-6">
-                            <div className="bg-white rounded-xl shadow-lg p-6 text-center">
-                                <div className="text-3xl font-bold text-indigo-600">{tasks.filter(t => t.completed).length}</div>
-                                <div className="text-gray-600 mt-1">Tasks Completed</div>
-                            </div>
-                            <div className="bg-white rounded-xl shadow-lg p-6 text-center">
-                                <div className="text-3xl font-bold text-purple-600">{tasks.filter(t => !t.completed).length}</div>
-                                <div className="text-gray-600 mt-1">Tasks Remaining</div>
-                            </div>
-                            <div className="bg-white rounded-xl shadow-lg p-6 text-center">
-                                <div className="text-3xl font-bold text-green-600">{tasks.length}</div>
-                                <div className="text-gray-600 mt-1">Total Tasks</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            );
-        };
+        <tr>
+          <td>22</td>
+          <td>S3 — Formal Methods</td>
+          <td>Stage 3 review & FM summary</td>
+          <td>
+            Review what you learned from SF and tiny language project.  
+            Summarize how formal methods relate to ML/AI in your own words.
+          </td>
+          <td>
+            1–2 page markdown <em>formal-methods-summary.md</em> referencing your Lean/Coq files.
+          </td>
+          <td>
+            - SF notes  
+            - Your tiny-lang project
+          </td>
+          <td class="col-hours">5–7</td>
+          <td class="col-completed"><input type="checkbox"></td>
+          <td></td>
+        </tr>
 
-        const getTypeStyle = (type) => {
-            switch (type) {
-                case 'Reading': return 'bg-blue-100 text-blue-700';
-                case 'Coding': return 'bg-green-100 text-green-700';
-                case 'Project': return 'bg-purple-100 text-purple-700';
-                case 'Study': return 'bg-yellow-100 text-yellow-700';
-                default: return 'bg-gray-100 text-gray-700';
-            }
-        };
+        <!-- STAGE 4: ML FOUNDATIONS WITH PROJECTS (Weeks 23–30) -->
+        <tr>
+          <td>23</td>
+          <td>S4 — ML Foundations</td>
+          <td>Python + NumPy + pandas refresh</td>
+          <td>
+            Brush up Python basics.  
+            Practice data loading, manipulation, simple plotting.  
+            Implement a manual least-squares linear regression.
+          </td>
+          <td>
+            New public repo <em>ml-foundations</em> with <em>linear-regression.ipynb</em>.
+          </td>
+          <td>
+            - Python docs  
+            - NumPy & pandas tutorials
+          </td>
+          <td class="col-hours">7–9</td>
+          <td class="col-completed"><input type="checkbox"></td>
+          <td></td>
+        </tr>
 
-        const getTypeIcon = (type) => {
-            switch (type) {
-                case 'Reading': return <BookOpen />;
-                case 'Coding': return <Code />;
-                case 'Project': return <Target />;
-                case 'Study': return <Calendar />;
-                default: return null;
-            }
-        };
+        <tr>
+          <td>24</td>
+          <td>S4 — ML Foundations</td>
+          <td>Classical ML: classification</td>
+          <td>
+            Learn logistic regression and decision trees.  
+            Train a classifier on a simple dataset (e.g., Iris).
+          </td>
+          <td>
+            Notebook <em>iris-classification.ipynb</em> with metrics & plots.
+          </td>
+          <td>
+            - scikit-learn tutorials  
+            - Any intro ML course/notes
+          </td>
+          <td class="col-hours">7–9</td>
+          <td class="col-completed"><input type="checkbox"></td>
+          <td></td>
+        </tr>
 
-        const initialTasks = [
-            { id: 1, phase: 'Phase 1', week: 'Week 1', type: 'Reading', description: 'Review propositional and predicate logic', completed: false, notes: '' },
-            { id: 2, phase: 'Phase 1', week: 'Week 1', type: 'Reading', description: 'Read Software Foundations Vol 1 - Chapters 1-3', completed: false, notes: '' },
-            { id: 3, phase: 'Phase 1', week: 'Week 1', type: 'Reading', description: 'Study Basic Category Theory - Chapters 1-2', completed: false, notes: '' },
-            { id: 4, phase: 'Phase 1', week: 'Week 1', type: 'Coding', description: 'Install Lean 4 from lean-lang.org', completed: false, notes: '' },
-            { id: 5, phase: 'Phase 1', week: 'Week 1', type: 'Coding', description: 'Complete exercises from Theorem Proving in Lean 4', completed: false, notes: '' },
-            { id: 6, phase: 'Phase 1', week: 'Week 1', type: 'Coding', description: 'Write proof: ∀ p q : Prop, p ∧ q → q ∧ p', completed: false, notes: '' },
-            { id: 7, phase: 'Phase 1', week: 'Week 2', type: 'Study', description: 'Deepen understanding of quantifiers and implication', completed: false, notes: '' },
-            { id: 8, phase: 'Phase 1', week: 'Week 2', type: 'Reading', description: 'Study Basic Category Theory - Chapters 3-4', completed: false, notes: '' },
-            { id: 9, phase: 'Phase 1', week: 'Week 2', type: 'Coding', description: 'Learn Lean tactics: intro, apply, rw, simp, cases, induction', completed: false, notes: '' },
-            { id: 10, phase: 'Phase 1', week: 'Week 2', type: 'Project', description: 'Prove associativity of addition for natural numbers', completed: false, notes: '' },
-            { id: 11, phase: 'Phase 1', week: 'Week 2', type: 'Project', description: 'Prove commutativity of multiplication', completed: false, notes: '' },
-            { id: 12, phase: 'Phase 1', week: 'Week 3', type: 'Study', description: 'Dive into Lean type theory: propositions-as-types, dependent types', completed: false, notes: '' },
-            { id: 13, phase: 'Phase 1', week: 'Week 3', type: 'Reading', description: 'Read Lean mathlib documentation', completed: false, notes: '' },
-            { id: 14, phase: 'Phase 1', week: 'Week 3', type: 'Reading', description: 'Study Basic Category Theory Ch 5-6: universal properties & adjoints', completed: false, notes: '' },
-            { id: 15, phase: 'Phase 1', week: 'Week 3', type: 'Coding', description: 'Prove distributivity a*(b + c) = a*b + a*c in Lean', completed: false, notes: '' },
-            { id: 16, phase: 'Phase 1', week: 'Week 3', type: 'Coding', description: 'Write custom tactics using Lean meta-programming API', completed: false, notes: '' },
-            { id: 17, phase: 'Phase 1', week: 'Week 4', type: 'Study', description: 'Explore automation in Lean: auto, linarith, ring', completed: false, notes: '' },
-            { id: 18, phase: 'Phase 1', week: 'Week 4', type: 'Reading', description: 'Read Lean 4 metaprogramming book', completed: false, notes: '' },
-            { id: 19, phase: 'Phase 1', week: 'Week 4', type: 'Reading', description: 'Review Yoneda lemma intuition (Leinster Ch 7)', completed: false, notes: '' },
-            { id: 20, phase: 'Phase 1', week: 'Week 4', type: 'Project', description: 'Formalize Peano arithmetic axioms and prove lemmas', completed: false, notes: '' },
-            { id: 21, phase: 'Phase 2', week: 'Week 5', type: 'Study', description: 'Study how Coq/Lean encode logical inference', completed: false, notes: '' },
-            { id: 22, phase: 'Phase 2', week: 'Week 5', type: 'Reading', description: 'Read about SMT solvers (Z3, E-prover)', completed: false, notes: '' },
-            { id: 23, phase: 'Phase 2', week: 'Week 5', type: 'Coding', description: 'Integrate Python with Z3 (z3-solver package)', completed: false, notes: '' },
-            { id: 24, phase: 'Phase 2', week: 'Week 5', type: 'Coding', description: 'Write Python script using Z3 to prove logical formulas', completed: false, notes: '' },
-            { id: 25, phase: 'Phase 2', week: 'Week 6', type: 'Study', description: 'Study symbolic reasoning with SymPy', completed: false, notes: '' },
-            { id: 26, phase: 'Phase 2', week: 'Week 6', type: 'Study', description: 'Explore differences between symbolic tools and proof assistants', completed: false, notes: '' },
-            { id: 27, phase: 'Phase 2', week: 'Week 6', type: 'Study', description: 'Learn Lean simp and rewriting system', completed: false, notes: '' },
-            { id: 28, phase: 'Phase 2', week: 'Week 6', type: 'Project', description: 'Build Python-SymPy-Lean bridge script', completed: false, notes: '' },
-            { id: 29, phase: 'Phase 2', week: 'Week 7', type: 'Reading', description: 'Read about proof search and resolution algorithms', completed: false, notes: '' },
-            { id: 30, phase: 'Phase 2', week: 'Week 7', type: 'Reading', description: 'Read GamePad paper (DeepMind)', completed: false, notes: '' },
-            { id: 31, phase: 'Phase 2', week: 'Week 7', type: 'Coding', description: 'Generate and visualize Lean proof trees manually', completed: false, notes: '' },
-            { id: 32, phase: 'Phase 2', week: 'Week 7', type: 'Coding', description: 'Export Lean proof trees to JSON', completed: false, notes: '' },
-            { id: 33, phase: 'Phase 2', week: 'Week 7', type: 'Coding', description: 'Parse and visualize proof trees in Python (networkx)', completed: false, notes: '' },
-            { id: 34, phase: 'Phase 2', week: 'Week 8', type: 'Reading', description: 'Read about tactic prediction in ML (GPT-f or LeanDojo papers)', completed: false, notes: '' },
-            { id: 35, phase: 'Phase 2', week: 'Week 8', type: 'Coding', description: 'Set up LeanDojo (Python + Lean 4)', completed: false, notes: '' },
-            { id: 36, phase: 'Phase 2', week: 'Week 8', type: 'Coding', description: 'Extract proof data from mathlib', completed: false, notes: '' },
-            { id: 37, phase: 'Phase 2', week: 'Week 8', type: 'Study', description: 'Inspect LeanDojo data structure (AST, tactics, lemmas)', completed: false, notes: '' },
-            { id: 38, phase: 'Phase 3', week: 'Week 9-10', type: 'Reading', description: 'Read LeanDojo paper', completed: false, notes: '' },
-            { id: 39, phase: 'Phase 3', week: 'Week 9-10', type: 'Coding', description: 'Install LeanDojo and explore examples', completed: false, notes: '' },
-            { id: 40, phase: 'Phase 3', week: 'Week 9-10', type: 'Study', description: 'Understand dataset structure (proof step prediction)', completed: false, notes: '' },
-            { id: 41, phase: 'Phase 3', week: 'Week 9-10', type: 'Coding', description: 'Extract proof traces using LeanDojo API', completed: false, notes: '' },
-            { id: 42, phase: 'Phase 3', week: 'Week 9-10', type: 'Project', description: 'Implement baseline model (logistic regression/MLP) for tactic prediction', completed: false, notes: '' },
-            { id: 43, phase: 'Phase 3', week: 'Week 11-12', type: 'Study', description: 'Learn PyTorch basics', completed: false, notes: '' },
-            { id: 44, phase: 'Phase 3', week: 'Week 11-12', type: 'Coding', description: 'Implement transformer encoder for proof tokens', completed: false, notes: '' },
-            { id: 45, phase: 'Phase 3', week: 'Week 11-12', type: 'Project', description: 'Train model on LeanDojo data (small mathlib subset)', completed: false, notes: '' },
-            { id: 46, phase: 'Phase 3', week: 'Week 13-14', type: 'Project', description: 'Evaluate model on held-out theorems', completed: false, notes: '' },
-            { id: 47, phase: 'Phase 3', week: 'Week 13-14', type: 'Study', description: 'Visualize prediction successes/failures', completed: false, notes: '' },
-            { id: 48, phase: 'Phase 3', week: 'Week 13-14', type: 'Reading', description: 'Read MiniF2F benchmark paper', completed: false, notes: '' },
-            { id: 49, phase: 'Phase 3', week: 'Week 13-14', type: 'Project', description: 'Fine-tune model on miniF2F dataset', completed: false, notes: '' },
-            { id: 50, phase: 'Phase 3', week: 'Week 15-16', type: 'Project', description: 'Incorporate symbolic reasoning in predictions', completed: false, notes: '' },
-            { id: 51, phase: 'Phase 3', week: 'Week 15-16', type: 'Project', description: 'Implement hybrid ML-symbolic approach', completed: false, notes: '' },
-            { id: 52, phase: 'Phase 3', week: 'Week 15-16', type: 'Project', description: 'Build symbolic proof verifier for ML-suggested tactics', completed: false, notes: '' },
-            { id: 53, phase: 'Phase 4', week: 'Week 17-18', type: 'Reading', description: 'Study AlphaGeometry (Nature 2024)', completed: false, notes: '' },
-            { id: 54, phase: 'Phase 4', week: 'Week 17-18', type: 'Reading', description: 'Study GPT-f (Meta AI)', completed: false, notes: '' },
-            { id: 55, phase: 'Phase 4', week: 'Week 17-18', type: 'Project', description: 'Reproduce small-scale proof synthesis example', completed: false, notes: '' },
-            { id: 56, phase: 'Phase 4', week: 'Week 17-18', type: 'Project', description: 'Generate automatic proof for Lean theorem (e.g., n + 0 = n)', completed: false, notes: '' },
-            { id: 57, phase: 'Phase 4', week: 'Week 19-20', type: 'Project', description: 'Extend model to graph-based reasoning', completed: false, notes: '' },
-            { id: 58, phase: 'Phase 4', week: 'Week 19-20', type: 'Reading', description: 'Read GNN for Theorem Proving paper (ICLR 2022)', completed: false, notes: '' },
-            { id: 59, phase: 'Phase 4', week: 'Week 19-20', type: 'Coding', description: 'Implement GNN using PyTorch Geometric', completed: false, notes: '' },
-            { id: 60, phase: 'Phase 4', week: 'Week 21-22', type: 'Project', description: 'Optimize model using symbolic loss functions', completed: false, notes: '' },
-            { id: 61, phase: 'Phase 4', week: 'Week 21-22', type: 'Study', description: 'Include category-theoretic structure in representations', completed: false, notes: '' },
-            { id: 62, phase: 'Phase 4', week: 'Week 21-22', type: 'Project', description: 'Formalize basic category theory in Lean', completed: false, notes: '' },
-            { id: 63, phase: 'Phase 4', week: 'Week 23-24', type: 'Project', description: 'Write research-style report on problem explored', completed: false, notes: '' },
-            { id: 64, phase: 'Phase 4', week: 'Week 23-24', type: 'Project', description: 'Document dataset, model, and evaluation', completed: false, notes: '' }
-        ];
+        <tr>
+          <td>25</td>
+          <td>S4 — ML Foundations</td>
+          <td>Neural network basics</td>
+          <td>
+            Install PyTorch or JAX.  
+            Implement a simple feedforward network for MNIST or similar dataset.
+          </td>
+          <td>
+            Notebook <em>mnist-mlp.ipynb</em> + short section in README summarizing results.
+          </td>
+          <td>
+            - PyTorch tutorials  
+            - Your ML repo
+          </td>
+          <td class="col-hours">7–10</td>
+          <td class="col-completed"><input type="checkbox"></td>
+          <td></td>
+        </tr>
 
-        ReactDOM.render(<TheoremProvingTracker />, document.getElementById('root'));
-    </script>
+        <tr>
+          <td>26</td>
+          <td>S4 — ML Foundations</td>
+          <td>Sequence models / attention (high level)</td>
+          <td>
+            Study RNNs, LSTMs, transformers conceptually.  
+            Run a small text classification model (pre-built or lightly modified).
+          </td>
+          <td>
+            <em>text-classification.ipynb</em> with commentary: how this might relate to sequence of tactics.
+          </td>
+          <td>
+            - High-level DL/transformer tutorials  
+            - Online lectures/blog posts
+          </td>
+          <td class="col-hours">6–8</td>
+          <td class="col-completed"><input type="checkbox"></td>
+          <td></td>
+        </tr>
+
+        <tr>
+          <td>27</td>
+          <td>S4 — ML Foundations</td>
+          <td>Mini end-to-end ML project</td>
+          <td>
+            Choose a non-Lean dataset (Kaggle/UCI).  
+            Do EDA, baseline, model comparison, and a short write-up.
+          </td>
+          <td>
+            Folder <em>project1-ml/</em> with notebook + <em>REPORT.md</em>.
+          </td>
+          <td>
+            - Kaggle / UCI dataset  
+            - scikit-learn / PyTorch
+          </td>
+          <td class="col-hours">7–10</td>
+          <td class="col-completed"><input type="checkbox"></td>
+          <td></td>
+        </tr>
+
+        <tr>
+          <td>28</td>
+          <td>S4 — ML Foundations</td>
+          <td>Data perspectives for proofs</td>
+          <td>
+            Think about proof states as data: goals, context, tactics.  
+            Sketch possible fields you could log from Lean for future ML.
+          </td>
+          <td>
+            <em>lean-data-design.md</em> describing candidate schema for proof traces (JSON-style).
+          </td>
+          <td>
+            - Your Lean experience  
+            - Any AI-for-theorem-proving blog/paper summaries (optional)
+          </td>
+          <td class="col-hours">5–7</td>
+          <td class="col-completed"><input type="checkbox"></td>
+          <td></td>
+        </tr>
+
+        <tr>
+          <td>29</td>
+          <td>S4 — ML Foundations</td>
+          <td>Review & align with AI-for-Lean goal</td>
+          <td>
+            Review your ML notebooks and Lean work.  
+            Decide what AI helper you want first: tactic prediction, lemma suggestion, or goal similarity search.
+          </td>
+          <td>
+            Short plan <em>ai-for-lean-plan.md</em> with 2–3 phases and milestones.
+          </td>
+          <td>
+            - Your ML repo  
+            - Your Lean repos
+          </td>
+          <td class="col-hours">5–7</td>
+          <td class="col-completed"><input type="checkbox"></td>
+          <td></td>
+        </tr>
+
+        <tr>
+          <td>30</td>
+          <td>S4 — ML Foundations</td>
+          <td>Stage 4 showcase</td>
+          <td>
+            Clean up ML repos & notebooks.  
+            Ensure everything runs from scratch and is readable.
+          </td>
+          <td>
+            Polished <em>ml-foundations</em> repo with updated README linking to your 3–4 key notebooks.
+          </td>
+          <td>
+            - Your ML code  
+            - Example open-source ML project repos for style
+          </td>
+          <td class="col-hours">5–7</td>
+          <td class="col-completed"><input type="checkbox"></td>
+          <td></td>
+        </tr>
+
+        <!-- STAGE 5: AI-FOR-LEAN ITERATIVE PROJECT (Weeks 31–38) -->
+        <tr>
+          <td>31</td>
+          <td>S5 — AI-for-Lean</td>
+          <td>AI-for-Lean v0: scope & design</td>
+          <td>
+            Pick a concrete objective (e.g., suggest next tactic).  
+            Design minimal data pipeline: what to log, where to store, simple representation.
+          </td>
+          <td>
+            <em>ai-lean-v0-design.md</em> with diagrams / bullet points.
+          </td>
+          <td>
+            - <em>ai-for-lean-plan.md</em>  
+            - <em>lean-data-design.md</em>
+          </td>
+          <td class="col-hours">5–7</td>
+          <td class="col-completed"><input type="checkbox"></td>
+          <td></td>
+        </tr>
+
+        <tr>
+          <td>32</td>
+          <td>S5 — AI-for-Lean</td>
+          <td>Data extraction script</td>
+          <td>
+            Write a script (even if semi-manual) to extract (goal, context, tactic) examples from your own Lean files.
+          </td>
+          <td>
+            New repo <em>lean-ai-data</em> with <em>extract.py</em> and sample JSON/CSV file.
+          </td>
+          <td>
+            - Python scripting  
+            - Your Lean projects
+          </td>
+          <td class="col-hours">7–9</td>
+          <td class="col-completed"><input type="checkbox"></td>
+          <td></td>
+        </tr>
+
+        <tr>
+          <td>33</td>
+          <td>S5 — AI-for-Lean</td>
+          <td>Feature engineering v1</td>
+          <td>
+            Convert goals & tactics into simple numeric features (e.g., token bag-of-words, IDs).  
+            Inspect data distributions.
+          </td>
+          <td>
+            Notebook <em>features-v1.ipynb</em> in <em>lean-ai-data</em> exploring the feature space.
+          </td>
+          <td>
+            - scikit-learn preprocessing  
+            - pandas, NumPy
+          </td>
+          <td class="col-hours">7–9</td>
+          <td class="col-completed"><input type="checkbox"></td>
+          <td></td>
+        </tr>
+
+        <tr>
+          <td>34</td>
+          <td>S5 — AI-for-Lean</td>
+          <td>Baseline model (classifier)</td>
+          <td>
+            Train a basic classifier to predict tactic from goal features.  
+            Measure accuracy and top-k suggestions.
+          </td>
+          <td>
+            Notebook <em>baseline-tactic-model.ipynb</em> with metrics & simple plots.
+          </td>
+          <td>
+            - scikit-learn / simple MLP  
+            - Your extracted dataset
+          </td>
+          <td class="col-hours">7–10</td>
+          <td class="col-completed"><input type="checkbox"></td>
+          <td></td>
+        </tr>
+
+        <tr>
+          <td>35</td>
+          <td>S5 — AI-for-Lean</td>
+          <td>Prediction CLI / tool v0</td>
+          <td>
+            Build a small CLI script that:  
+            - Takes a text goal or example,  
+            - Loads your model,  
+            - Prints top-k predicted tactics.
+          </td>
+          <td>
+            Repo <em>lean-tactic-helper</em> with <em>predict.py</em> and usage examples in README.
+          </td>
+          <td>
+            - Python CLI patterns  
+            - Your baseline model
+          </td>
+          <td class="col-hours">7–9</td>
+          <td class="col-completed"><input type="checkbox"></td>
+          <td></td>
+        </tr>
+
+        <tr>
+          <td>36</td>
+          <td>S5 — AI-for-Lean</td>
+          <td>Embeddings & retrieval v1</td>
+          <td>
+            Use a text embedding model to embed lemma statements and goals.  
+            Implement k-NN retrieval of similar lemmas.
+          </td>
+          <td>
+            Notebook <em>lemma-retrieval-v1.ipynb</em> showing some example queries and results.
+          </td>
+          <td>
+            - Sentence embedding library  
+            - Basic k-NN / similarity search
+          </td>
+          <td class="col-hours">7–10</td>
+          <td class="col-completed"><input type="checkbox"></td>
+          <td></td>
+        </tr>
+
+        <tr>
+          <td>37</td>
+          <td>S5 — AI-for-Lean</td>
+          <td>AI-for-Lean v1: combined helper</td>
+          <td>
+            Combine classifier + retrieval ideas into a single "helper" script for yourself.  
+            Use it on a few real Lean goals and log what works/doesn’t.
+          </td>
+          <td>
+            Updated <em>lean-tactic-helper</em> with both prediction and retrieval modes, plus <em>EXPERIMENTS.md</em>.
+          </td>
+          <td>
+            - Your previous AI-for-Lean repos  
+            - Lean projects as testbed
+          </td>
+          <td class="col-hours">7–9</td>
+          <td class="col-completed"><input type="checkbox"></td>
+          <td></td>
+        </tr>
+
+        <tr>
+          <td>38</td>
+          <td>S5 — AI-for-Lean</td>
+          <td>Evaluation & write-up (technical)</td>
+          <td>
+            Systematically evaluate success rate on a small set of proof goals.  
+            Document where the system helps and where it fails.
+          </td>
+          <td>
+            2–3 page markdown <em>ai-for-lean-v1-report.md</em> (can later become blog or part of portfolio).
+          </td>
+          <td>
+            - Your experimental logs  
+            - Your Lean goals dataset
+          </td>
+          <td class="col-hours">6–8</td>
+          <td class="col-completed"><input type="checkbox"></td>
+          <td></td>
+        </tr>
+
+        <!-- STAGE 6: INTEGRATION & PORTFOLIO (Weeks 39–42) -->
+        <tr>
+          <td>39</td>
+          <td>S6 — Integration</td>
+          <td>Integrate Lean projects + AI helper</td>
+          <td>
+            Run your AI helper on:  
+            - mini math chapter,  
+            - tiny language proofs.  
+            See if suggestions genuinely speed you up.
+          </td>
+          <td>
+            Short markdown <em>integration-notes.md</em> describing 2–3 concrete examples of assistance.
+          </td>
+          <td>
+            - <em>lean-mini-chapter</em>  
+            - <em>tiny-lang</em>  
+            - <em>lean-tactic-helper</em>
+          </td>
+          <td class="col-hours">6–8</td>
+          <td class="col-completed"><input type="checkbox"></td>
+          <td></td>
+        </tr>
+
+        <tr>
+          <td>40</td>
+          <td>S6 — Integration</td>
+          <td>Public-facing README / portfolio page</td>
+          <td>
+            Create a single "hub" README or simple static page listing:  
+            Lean basics repo, mini-chapter, tiny-language, ML repo, AI-for-Lean helper.
+          </td>
+          <td>
+            Repo or page <em>formal-methods-ml-portfolio</em> linking to all projects with short descriptions.
+          </td>
+          <td>
+            - Your existing repos  
+            - Example GitHub portfolio READMEs
+          </td>
+          <td class="col-hours">5–7</td>
+          <td class="col-completed"><input type="checkbox"></td>
+          <td></td>
+        </tr>
+
+        <tr>
+          <td>41</td>
+          <td>S6 — Integration</td>
+          <td>CV & LinkedIn / profile update</td>
+          <td>
+            Update your CV with: Lean, formal methods, ML, and AI-for-Lean project.  
+            Add selected links in a "Projects" section.
+          </td>
+          <td>
+            New CV version (PDF) emphasizing roles: ML engineer/researcher, formal methods + ML.
+          </td>
+          <td>
+            - Example ML / research engineer CVs  
+            - Your portfolio hub
+          </td>
+          <td class="col-hours">4–6</td>
+          <td class="col-completed"><input type="checkbox"></td>
+          <td></td>
+        </tr>
+
+        <tr>
+          <td>42</td>
+          <td>S6 — Integration</td>
+          <td>Final reflection & targeting roles</td>
+          <td>
+            Reflect on entire journey.  
+            Identify 5–10 companies or research groups working on theorem proving / formal methods / ML, and map your projects to their work.
+          </td>
+          <td>
+            <em>next-steps.md</em> listing target organisations, email templates, and how you’ll present your portfolio.
+          </td>
+          <td>
+            - Job boards / lab pages (for inspiration)  
+            - Your portfolio + CV
+          </td>
+          <td class="col-hours">4–6</td>
+          <td class="col-completed"><input type="checkbox"></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="small-note">
+      You can edit this file anytime to adjust weeks, add actual URLs to resources, or change deliverables.
+      The key idea: every few weeks, you ship something visible — a repo, notebook, or write-up — that shows Lean,
+      formal methods, and ML/AI converging towards AI-assisted proof tooling.
+    </div>
+  </div>
 </body>
 </html>
