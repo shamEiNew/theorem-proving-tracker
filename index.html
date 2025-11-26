@@ -12,6 +12,7 @@
       --header-bg: #000000;
       --header-fg: #ffffff;
       --accent: #111111;
+      --critical: #c41e3a;
     }
 
     * {
@@ -28,7 +29,7 @@
     }
 
     .wrapper {
-      max-width: 1200px;
+      max-width: 1400px;
       margin: 0 auto;
       padding: 24px 16px 48px;
     }
@@ -69,10 +70,31 @@
       margin-right: 12px;
     }
 
+    .critical-note {
+      background: #fff3cd;
+      border-left: 4px solid var(--critical);
+      padding: 12px;
+      margin: 1rem 0;
+      font-size: 0.9rem;
+    }
+
+    .week0-box {
+      background: #e8f4f8;
+      border: 2px solid #0066cc;
+      padding: 16px;
+      margin: 1.5rem 0;
+      border-radius: 4px;
+    }
+
+    .week0-box h3 {
+      margin-top: 0;
+      color: #0066cc;
+    }
+
     table {
       width: 100%;
       border-collapse: collapse;
-      table-layout: fixed; /* ensures wrapping */
+      table-layout: fixed;
       border: 1px solid var(--border);
       font-size: 0.85rem;
     }
@@ -101,6 +123,16 @@
 
     tr:nth-child(odd) td {
       background: #ffffff;
+    }
+
+    .critical-week {
+      background: #fff9e6 !important;
+      border-left: 3px solid var(--critical);
+    }
+
+    .new-week {
+      background: #f0f8ff !important;
+      border-left: 3px solid #0066cc;
     }
 
     .col-week {
@@ -134,7 +166,12 @@
     .small-note {
       font-size: 0.8rem;
       color: #777;
-      margin-top: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .emphasis {
+      color: var(--critical);
+      font-weight: 600;
     }
 
     @media (max-width: 768px) {
@@ -149,21 +186,37 @@
 </head>
 <body>
   <div class="wrapper">
-    <h1>Neuro-Symbolic AI + Lean Roadmap (Mathematician's Track)</h1>
+    <h1>Neuro-Symbolic AI + Lean Roadmap (Mathematician's Track — Enhanced)</h1>
     <div class="subtitle">
-      16-week accelerated plan: Leveraging mathematical maturity and Python skills to build AI tools for Theorem Proving.
+      18-week accelerated plan: Leveraging mathematical maturity and Python skills to build AI tools for Theorem Proving.
     </div>
     <div class="meta">
-      Phases: P1 Lean Foundations · P2 The Python-Lean Bridge · P3 Deep Learning & RAG · P4 Research & Portfolio.
+      Phases: P0 Setup · P1 Lean Foundations · P2 The Python-Lean Bridge · P3 Deep Learning & RAG · P4 Research & Portfolio.
     </div>
 
     <div class="legend">
       <span><strong>Hours/week:</strong> suggested 10–12 hours</span>
-      <span><strong>Goal:</strong> Build an AI-assisted proving tool</span>
-      <span><strong>Focus:</strong> Automation & Benchmarks (MiniF2F)</span>
+      <span><strong>Goal:</strong> Build an AI-assisted proving tool with quantitative benchmarks</span>
+      <span><strong>Focus:</strong> Metaprogramming, RAG Architecture & Evaluation Rigor</span>
     </div>
 
-    <h2>Week-by-Week Plan (with Deliverables)</h2>
+    <div class="critical-note">
+      <strong>⚠️ Critical Success Factor:</strong> Week 4 (Metaprogramming) is where 50% of learners quit. If stuck, extend to 2 weeks and ask for help on Lean Zulip. <span class="emphasis">Do not skip this week</span>—it's the difference between being a "Lean user" and a "Lean builder."
+    </div>
+
+    <div class="week0-box">
+      <h3>Week 0: Environment Setup (Complete Before Week 1)</h3>
+      <ul>
+        <li><strong>Day 1:</strong> Install Lean 4 (latest stable) + VS Code with Lean extension</li>
+        <li><strong>Day 2:</strong> Clone Mathlib and build it (2-4 hours compile time—run overnight)</li>
+        <li><strong>Day 3:</strong> Test LeanDojo installation: <code>pip install lean-dojo</code> and verify with a simple trace</li>
+        <li><strong>Day 4:</strong> Baseline Assessment: Complete first 10 levels of Natural Number Game</li>
+        <li><strong>Day 5:</strong> Join Lean Zulip (#new-members, #machine-learning) and introduce yourself</li>
+      </ul>
+      <p style="margin-bottom: 0;"><strong>Success Metric:</strong> You can compile a "Hello World" Lean file and run LeanDojo's basic example.</p>
+    </div>
+
+    <h2>Week-by-Week Plan (with Deliverables & Enhancements)</h2>
 
     <table>
       <thead>
@@ -193,7 +246,7 @@
             <em>week1-quantifiers.lean</em>: Manually implement `and_comm` and `quantifier_swap` without tactics.
           </td>
           <td>
-            - TPiL4 (Ch 4)
+            - TPiL4 (Ch 4)<br>
             - "Propositions as Types" (Wadler)
           </td>
           <td class="col-hours">8–10</td>
@@ -213,7 +266,7 @@
             Screenshot of NNG Certificate + <em>week2-tactics.lean</em> with commented tactic states.
           </td>
           <td>
-            - TPiL4 (Ch 5-8)
+            - TPiL4 (Ch 5-8)<br>
             - Natural Number Game (Lean 4)
           </td>
           <td class="col-hours">8–10</td>
@@ -224,29 +277,30 @@
         <tr>
           <td>3</td>
           <td>P1 — Foundation</td>
-          <td>Benchmarks (MiniF2F/IMO)</td>
+          <td>Mathlib & Real Math</td>
           <td>
-            <strong>Do not formalize a book.</strong> <br>
-            Read <em>Mathematics in Lean</em> to learn API basics, then formalize 3 distinct problems from the <strong>MiniF2F</strong> benchmark (Algebra, Number Theory, Topology).
+            Switch to <em>Mathematics in Lean</em> (MIL). <br>
+            Learn how Algebra and Topology are encoded. <br>
+            Understand `Type`, `Type u`, and Universe Polymorphism.
           </td>
           <td>
-            <em>benchmarks.lean</em>: Formal statements and proofs for 3 MiniF2F/IMO-style problems.
+            <em>week3-algebra.lean</em>: Solve 5 exercises from MIL "Algebra" chapter.
           </td>
           <td>
-            - MiniF2F Repository (GitHub)
-            - Mathematics in Lean
+            - Mathematics in Lean<br>
+            - Mathlib documentation
           </td>
           <td class="col-hours">8–10</td>
           <td class="col-completed"><input type="checkbox"></td>
-          <td>Aligns with AI eval standards.</td>
+          <td>Start exploring the API.</td>
         </tr>
 
-        <tr>
+        <tr class="critical-week">
           <td>4</td>
           <td>P1 — Foundation</td>
           <td>Lean 4 Metaprogramming</td>
           <td>
-            <strong>The Pivot:</strong> Stop proving; start hacking. <br>
+            <strong class="emphasis">The Pivot:</strong> Stop proving; start hacking. <br>
             Learn `Lean.Expr` (Expression tree). <br>
             Write a tactic that inspects the goal state.
           </td>
@@ -254,12 +308,33 @@
             <em>week4-meta.lean</em>: A tactic `elab "check_type"` that prints the current goal's type to the console.
           </td>
           <td>
-            - Lean 4 Metaprogramming Book
+            - Lean 4 Metaprogramming Book<br>
             - "Macro" vs "Elab" chapters
           </td>
           <td class="col-hours">10–12</td>
           <td class="col-completed"><input type="checkbox"></td>
-          <td>Hardest week. Don't skip.</td>
+          <td class="emphasis">Hardest week. Extend if needed.</td>
+        </tr>
+
+        <tr class="new-week">
+          <td>4.5</td>
+          <td>P1 — Foundation</td>
+          <td>Proof State Serialization</td>
+          <td>
+            <strong>CRITICAL GAP:</strong> Bridge Lean expressions to ML format. <br>
+            Convert `Lean.Expr` to JSON/S-expressions. <br>
+            This is the bottleneck for Python integration.
+          </td>
+          <td>
+            <em>state_to_json.lean</em>: Function that exports goal states as JSON with hypotheses, goal type, and metavariables.
+          </td>
+          <td>
+            - Lean 4 Metaprogramming (Ch. IO)<br>
+            - LeanDojo source code (state extraction)
+          </td>
+          <td class="col-hours">8–10</td>
+          <td class="col-completed"><input type="checkbox"></td>
+          <td>NEW: Enables ML pipeline.</td>
         </tr>
 
         <tr>
@@ -274,7 +349,7 @@
             <em>bridge.py</em>: Script that sends "1+1" to Lean and parses the output "2".
           </td>
           <td>
-            - lean-interact (PyPI)
+            - lean-interact (PyPI)<br>
             - Lean REPL documentation
           </td>
           <td class="col-hours">6–8</td>
@@ -289,18 +364,19 @@
           <td>
             Install <strong>LeanDojo</strong>. <br>
             Use it to trace a repo and extract (Theorem, Proof) pairs. <br>
-            Understand the `traced_repo` object.
+            <strong>NEW:</strong> Understand the tactic state <em>graph structure</em> (critical for Week 12 search).
           </td>
           <td>
-            <em>extract_data.py</em>: Generates a JSON file with 100 theorems and their tactic steps from Mathlib.
+            <em>extract_data.py</em>: Generates a JSON file with 100 theorems and their tactic steps from Mathlib. Include visualization of a proof state graph.
           </td>
           <td>
-            - LeanDojo Paper
-            - LeanDojo GitHub / Docs
+            - LeanDojo Paper<br>
+            - LeanDojo GitHub / Docs<br>
+            - NetworkX (for graph viz)
           </td>
           <td class="col-hours">8–10</td>
           <td class="col-completed"><input type="checkbox"></td>
-          <td>Standard research tool.</td>
+          <td>ENHANCED: Add graph understanding.</td>
         </tr>
 
         <tr>
@@ -316,8 +392,9 @@
             <em>retrieve_lemma.py</em>: Input a theorem string, output top-5 relevant Mathlib lemma names.
           </td>
           <td>
-            - "HyperTree Proof Search" (Paper)
-            - scikit-learn (TF-IDF)
+            - "HyperTree Proof Search"<br>
+            - scikit-learn (TF-IDF)<br>
+            - FAISS (Facebook AI Similarity Search)
           </td>
           <td class="col-hours">8–10</td>
           <td class="col-completed"><input type="checkbox"></td>
@@ -339,7 +416,7 @@
             <em>agent_loop.py</em>: A script that tries `simp`, `ring`, `linarith` on a goal until one works.
           </td>
           <td>
-            - OpenAI Gym interface concepts
+            - OpenAI Gym interface concepts<br>
             - LeanDojo `Dojo` class
           </td>
           <td class="col-hours">8–10</td>
@@ -360,12 +437,34 @@
             <em>seq2seq_tutorial.ipynb</em>: Complete the PyTorch Translation tutorial.
           </td>
           <td>
-            - PyTorch Seq2Seq Tutorial
+            - PyTorch Seq2Seq Tutorial<br>
             - "The Illustrated Transformer"
           </td>
           <td class="col-hours">10–12</td>
           <td class="col-completed"><input type="checkbox"></td>
           <td>Theory week.</td>
+        </tr>
+
+        <tr class="new-week">
+          <td>9.5</td>
+          <td>P3 — Neuro Layer</td>
+          <td>Benchmark Familiarity</td>
+          <td>
+            <strong>NEW:</strong> Understand what "good" looks like. <br>
+            Run evaluation on MiniF2F or ProofNet using existing pretrained models. <br>
+            Learn metrics: pass@1, pass@64, proof success rate.
+          </td>
+          <td>
+            <em>baseline_eval.ipynb</em>: Report showing baseline model performance on 50 test problems. Document failure modes.
+          </td>
+          <td>
+            - MiniF2F benchmark<br>
+            - ProofNet<br>
+            - LeanDojo pretrained models
+          </td>
+          <td class="col-hours">6–8</td>
+          <td class="col-completed"><input type="checkbox"></td>
+          <td>NEW: Prevents reinventing solved problems.</td>
         </tr>
 
         <tr>
@@ -374,19 +473,21 @@
           <td>LLM Fine-Tuning</td>
           <td>
             Use HuggingFace `transformers`. <br>
-            Fine-tune a small model (T5 or ByT5) on your Week 6 dataset. <br>
-            Task: Input State -> Output Tactic.
+            <strong>NEW:</strong> Fine-tune using LoRA/QLoRA (more practical than full fine-tuning). <br>
+            Task: Input State -> Output Tactic. <br>
+            <strong>NEW:</strong> Test on validation set from <em>different</em> Mathlib domain.
           </td>
           <td>
-            <em>train_prover.py</em> + Training Loss Curve.
+            <em>train_prover.py</em> + Training Loss Curve + Cross-domain validation results.
           </td>
           <td>
-            - HuggingFace Trainer API
+            - HuggingFace Trainer API<br>
+            - PEFT library (LoRA)<br>
             - LeanDojo Benchmark datasets
           </td>
           <td class="col-hours">10–12</td>
           <td class="col-completed"><input type="checkbox"></td>
-          <td>First "AI" model.</td>
+          <td>ENHANCED: Add generalization test.</td>
         </tr>
 
         <tr>
@@ -395,18 +496,20 @@
           <td>Retrieval Augmented Generation (RAG)</td>
           <td>
             Connect Week 7 (Retriever) with Week 10 (Generator). <br>
-            Prompt: "Given these lemmas [L1, L2], prove [Goal]".
+            Prompt: "Given these lemmas [L1, L2], prove [Goal]". <br>
+            <strong>NEW:</strong> Address cold-start: Try few-shot prompting with GPT-4 for domains with little training data.
           </td>
           <td>
-            <em>rag_prover.py</em>: A script that retrieves premises before generating a tactic.
+            <em>rag_prover.py</em>: A script that retrieves premises before generating a tactic. Include few-shot GPT-4 comparison.
           </td>
           <td>
-            - "LeanDojo: RAG for Theorems"
-            - FAISS (Facebook AI Similarity Search)
+            - "LeanDojo: RAG for Theorems"<br>
+            - FAISS<br>
+            - OpenAI API (few-shot)
           </td>
           <td class="col-hours">8–10</td>
           <td class="col-completed"><input type="checkbox"></td>
-          <td>State of the art.</td>
+          <td>ENHANCED: Add data efficiency experiments.</td>
         </tr>
 
         <tr>
@@ -421,8 +524,9 @@
             <em>proof_search.py</em>: Implements a search tree allowing backtracking when tactics fail.
           </td>
           <td>
-            - "AlphaProof" concepts
-            - Graph Theory (Trees)
+            - "AlphaProof" concepts<br>
+            - Graph Theory (Trees)<br>
+            - Week 6 state graph understanding
           </td>
           <td class="col-hours">10–12</td>
           <td class="col-completed"><input type="checkbox"></td>
@@ -435,19 +539,21 @@
           <td>Community & Landscape</td>
           <td>
             Read recent AITP papers (2024-2025). <br>
+            <strong>Priority:</strong> Draft, Sketch, and Prove (2022), LeanDojo (2023), AlphaProof (2024), Baldur (2024). <br>
             Join Lean Zulip `#machine-learning`. <br>
-            Identify a gap (e.g., "AI is bad at inequality proofs" or "AI struggles with MiniF2F algebra").
+            Identify a gap (e.g., "AI is bad at inequality proofs").
           </td>
           <td>
-            <em>lit_review.md</em>: Summary of 3 top papers and where your tool fits.
+            <em>lit_review.md</em>: Summary of 3 top papers and where your tool fits in the landscape.
           </td>
           <td>
-            - AITP Conference Proceedings
-            - arXiv (Neuro-symbolic AI)
+            - AITP Conference Proceedings<br>
+            - arXiv (Neuro-symbolic AI)<br>
+            - Papers: Draft-Sketch-Prove, LeanDojo, AlphaProof, Baldur
           </td>
           <td class="col-hours">6–8</td>
           <td class="col-completed"><input type="checkbox"></td>
-          <td>Contextualize your work.</td>
+          <td>ENHANCED: Specific paper list.</td>
         </tr>
 
         <tr>
@@ -456,18 +562,21 @@
           <td>Capstone: "Auto-Formalizer" or "Copilot"</td>
           <td>
             Build a user-facing tool. <br>
-            Example: A CLI tool where you type a math problem, and it suggests the Lean code.
+            Example: A CLI tool where you type a math problem, and it suggests the Lean code. <br>
+            <strong>NEW:</strong> Add human-in-the-loop: suggest 3 tactics, let user pick, learn from choice. <br>
+            <strong>NEW:</strong> Add quantitative benchmark: "My tool solves X% of MiniF2F."
           </td>
           <td>
-            <em>MVP v0.1</em>: A working script demonstrating the end-to-end pipeline on unseen problems.
+            <em>MVP v0.1</em>: Working end-to-end pipeline on unseen problems + benchmark results (e.g., "15% of MiniF2F-test solved").
           </td>
           <td>
-            - Your codebase (Weeks 5-12)
-            - VS Code Extension API (optional)
+            - Your codebase (Weeks 5-12)<br>
+            - VS Code Extension API (optional)<br>
+            - MiniF2F test set
           </td>
           <td class="col-hours">12–15</td>
           <td class="col-completed"><input type="checkbox"></td>
-          <td>The "Money" project.</td>
+          <td>ENHANCED: Add metrics & interactivity.</td>
         </tr>
 
         <tr>
@@ -476,18 +585,19 @@
           <td>Polish & Documentation</td>
           <td>
             Clean up code. Add docstrings. <br>
-            Write a technical blog post: "How I taught an AI to prove Math using LeanDojo."
+            Write a technical blog post: "How I taught an AI to prove Math using LeanDojo." <br>
+            <strong>Include concrete numbers:</strong> "Solved 15/100 MiniF2F problems (15% pass@1)."
           </td>
           <td>
-            Public GitHub Repo with nice README + Medium/Substack post.
+            Public GitHub Repo with nice README + Medium/Substack post with quantitative results.
           </td>
           <td>
-            - "Write the Docs" guide
+            - "Write the Docs" guide<br>
             - Distill.pub style
           </td>
           <td class="col-hours">8–10</td>
           <td class="col-completed"><input type="checkbox"></td>
-          <td>Visibility > Code quality.</td>
+          <td>ENHANCED: Emphasize metrics.</td>
         </tr>
 
         <tr>
@@ -496,26 +606,73 @@
           <td>Outreach & Application</td>
           <td>
             Update CV: "Neuro-Symbolic AI Engineer". <br>
-            Email labs/startups with your Blog Post + Repo.
+            Email labs/startups with your Blog Post + Repo. <br>
+            Target: Symbolica, DeepMind, OpenAI (reasoning teams), Anthropic.
           </td>
           <td>
-            <em>applications.md</em>: List of 5 labs/companies (e.g., Symbolica, DeepMind) to contact.
+            <em>applications.md</em>: List of 5 labs/companies contacted with personalized emails.
           </td>
           <td>
-            - "Cold Emailing for Research"
+            - "Cold Emailing for Research"<br>
             - LinkedIn
           </td>
           <td class="col-hours">5–7</td>
           <td class="col-completed"><input type="checkbox"></td>
           <td>Launch.</td>
         </tr>
+
+        <tr class="new-week">
+          <td>17</td>
+          <td>P4 — Optional</td>
+          <td>Neurosymbolic Hybrid</td>
+          <td>
+            <strong>OPTIONAL:</strong> Combine symbolic methods (SMT solvers, CAS) with neural tactics. <br>
+            Pure LLM approaches struggle with arithmetic/algebra. <br>
+            Interface Lean with Z3 or Mathematica.
+          </td>
+          <td>
+            <em>hybrid_solver.py</em>: Demo where Z3 handles inequalities and LLM handles high-level proof structure.
+          </td>
+          <td>
+            - Z3 Python API<br>
+            - Lean-Z3 integration examples<br>
+            - Baldur paper (LLM+Sledgehammer)
+          </td>
+          <td class="col-hours">10–12</td>
+          <td class="col-completed"><input type="checkbox"></td>
+          <td>NEW: Advanced extension.</td>
+        </tr>
+
+        <tr class="new-week">
+          <td>18</td>
+          <td>P4 — Optional</td>
+          <td>Interpretability</td>
+          <td>
+            <strong>OPTIONAL:</strong> Analyze <em>why</em> your model suggests certain tactics. <br>
+            Explainability is crucial for mathematician trust. <br>
+            Visualize attention on proof states.
+          </td>
+          <td>
+            <em>interpret_model.ipynb</em>: Attention visualizations showing which parts of the goal state influenced tactic choice.
+          </td>
+          <td>
+            - BertViz (attention visualization)<br>
+            - Captum (PyTorch interpretability)<br>
+            - "Attention is Not Explanation" paper
+          </td>
+          <td class="col-hours">8–10</td>
+          <td class="col-completed"><input type="checkbox"></td>
+          <td>NEW: Trust & debugging.</td>
+        </tr>
       </tbody>
     </table>
 
     <div class="small-note">
-      <strong>Crucial Note:</strong> Phase 1, Week 3 is intentionally set to "Benchmarks" (MiniF2F/IMO) rather than "Textbook Formalization." 
-      Formalizing an entire book (like Munkres or Dummit & Foote) is a massive time sink with low ROI for AI Engineering. 
-      Formalizing benchmark problems directly prepares you for the way AI models are evaluated in industry.
+      <strong>Success Metric (Week 16+):</strong> You can write a blog post titled <em>"I built an AI that proved [specific theorem class] in Lean with [X]% success rate"</em> with concrete numbers and working code. This is your calling card for ATP industry roles.
+    </div>
+
+    <div class="small-note">
+      <strong>Note:</strong> Weeks 17-18 are optional extensions if you have extra time or discover specific interests. The core 16-week plan is sufficient for job applications. Focus on <span class="emphasis">quantitative benchmarks</span> over feature completeness.
     </div>
   </div>
 </body>
