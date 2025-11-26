@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Formal Methods + Lean + ML/AI Roadmap (Deliverable-First)</title>
+  <title>Neuro-Symbolic AI + Lean Roadmap (Mathematician's Track)</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     :root {
@@ -149,18 +149,18 @@
 </head>
 <body>
   <div class="wrapper">
-    <h1>Formal Methods + Lean + ML/AI Roadmap</h1>
+    <h1>Neuro-Symbolic AI + Lean Roadmap (Mathematician's Track)</h1>
     <div class="subtitle">
-      42-week plan: build strong foundations in formal methods & mathematics while continuously shipping small, visible projects (Lean repos, ML notebooks, AI-for-Lean tools).
+      16-week accelerated plan: Leveraging mathematical maturity and Python skills to build AI tools for Theorem Proving.
     </div>
     <div class="meta">
-      Stages: S1 Lean Basics · S2 Math + Lean · S3 Formal Methods · S4 ML Foundations · S5 AI-for-Lean · S6 Integration & Portfolio.
+      Phases: P1 Lean Foundations · P2 The Python-Lean Bridge · P3 Deep Learning & RAG · P4 Research & Portfolio.
     </div>
 
     <div class="legend">
-      <span><strong>Hours/week:</strong> suggested 7–10 hours</span>
-      <span><strong>Deliverable:</strong> something you can show on GitHub/blog every few weeks</span>
-      <span><strong>Remarks:</strong> blockers, ideas, or links</span>
+      <span><strong>Hours/week:</strong> suggested 10–12 hours</span>
+      <span><strong>Goal:</strong> Build an AI-assisted proving tool</span>
+      <span><strong>Focus:</strong> Automation & Benchmarks (MiniF2F)</span>
     </div>
 
     <h2>Week-by-Week Plan (with Deliverables)</h2>
@@ -169,10 +169,10 @@
       <thead>
         <tr>
           <th class="col-week">Week</th>
-          <th class="col-stage">Stage</th>
+          <th class="col-stage">Phase</th>
           <th>Primary Focus</th>
           <th>Goals for the Week</th>
-          <th>Deliverable (GitHub / Blog / Notes)</th>
+          <th>Deliverable (GitHub / Notebooks)</th>
           <th>Core References / Resources</th>
           <th class="col-hours">Hours</th>
           <th class="col-completed">Done</th>
@@ -180,866 +180,342 @@
         </tr>
       </thead>
       <tbody>
-        <!-- STAGE 1: LEAN BASICS & LOGIC (Weeks 1–8) -->
         <tr>
           <td>1</td>
-          <td>S1 — Lean Basics</td>
-          <td>Environment setup & orientation</td>
+          <td>P1 — Foundation</td>
+          <td>Quantifiers as Functions</td>
           <td>
-            Install Lean 4 and VS Code extension.  
-            Run a sample Lean project.  
-            Skim "Theorem Proving in Lean 4" (TPiL4) table of contents.
+            Finish TPiL4 Chapter 4 (Quantifiers). <br>
+            Internalize the Curry-Howard correspondence (Proofs = Programs). <br>
+            <strong>Key concept:</strong> `∀` is a Pi-type (dependent function).
           </td>
           <td>
-            Create private GitHub repo <em>lean-notes</em> (or similar) and push a simple "hello Lean" file.
+            <em>week1-quantifiers.lean</em>: Manually implement `and_comm` and `quantifier_swap` without tactics.
           </td>
           <td>
-            - Lean 4 docs  
-            - TPiL4 (intro)  
-            - Lean community Zulip
+            - TPiL4 (Ch 4)
+            - "Propositions as Types" (Wadler)
           </td>
-          <td class="col-hours">5–7</td>
+          <td class="col-hours">8–10</td>
           <td class="col-completed"><input type="checkbox" checked></td>
-          <td></td>
+          <td>Critical for AI intuition.</td>
         </tr>
 
         <tr>
           <td>2</td>
-          <td>S1 — Lean Basics</td>
-          <td>Propositional logic in Lean</td>
+          <td>P1 — Foundation</td>
+          <td>Tactics & Induction</td>
           <td>
-            Work through basic propositions in TPiL4.  
-            Practice <code>intro</code>, <code>apply</code>, <code>exact</code>, <code>cases</code>.  
-            Prove 5–10 small theorems in Lean.
+            Master `induction`, `rewrite`, and `simp`. <br>
+            Complete the Natural Number Game (NNG) to build "tactic intuition" (needed for generating data later).
           </td>
           <td>
-            Commit <em>week2-propositions.lean</em> with all exercises & comments.
+            Screenshot of NNG Certificate + <em>week2-tactics.lean</em> with commented tactic states.
           </td>
           <td>
-            - TPiL4: Propositions  
-            - Kevin Buzzard Lean intro videos
+            - TPiL4 (Ch 5-8)
+            - Natural Number Game (Lean 4)
           </td>
-          <td class="col-hours">7–9</td>
+          <td class="col-hours">8–10</td>
           <td class="col-completed"><input type="checkbox"></td>
-          <td></td>
+          <td>Gamified learning.</td>
         </tr>
 
         <tr>
           <td>3</td>
-          <td>S1 — Lean Basics</td>
-          <td>Quantifiers & sets</td>
+          <td>P1 — Foundation</td>
+          <td>Benchmarks (MiniF2F/IMO)</td>
           <td>
-            Practice ∀ / ∃ proofs.  
-            Work with basic set operations and identities.  
-            Use <code>rw</code> extensively.
+            <strong>Do not formalize a book.</strong> <br>
+            Read <em>Mathematics in Lean</em> to learn API basics, then formalize 3 distinct problems from the <strong>MiniF2F</strong> benchmark (Algebra, Number Theory, Topology).
           </td>
           <td>
-            A Lean file <em>week3-sets-quantifiers.lean</em> with 5–8 cleaned-up proofs.
+            <em>benchmarks.lean</em>: Formal statements and proofs for 3 MiniF2F/IMO-style problems.
           </td>
           <td>
-            - TPiL4: Quantifiers, Sets  
-            - Velleman: quantifiers chapter
+            - MiniF2F Repository (GitHub)
+            - Mathematics in Lean
           </td>
-          <td class="col-hours">7–9</td>
+          <td class="col-hours">8–10</td>
           <td class="col-completed"><input type="checkbox"></td>
-          <td></td>
+          <td>Aligns with AI eval standards.</td>
         </tr>
 
         <tr>
           <td>4</td>
-          <td>S1 — Lean Basics</td>
-          <td>Induction + natural numbers</td>
+          <td>P1 — Foundation</td>
+          <td>Lean 4 Metaprogramming</td>
           <td>
-            Implement simple recursive functions on ℕ.  
-            Prove 3–5 classic induction lemmas (sum of first n, etc.) in Lean.
+            <strong>The Pivot:</strong> Stop proving; start hacking. <br>
+            Learn `Lean.Expr` (Expression tree). <br>
+            Write a tactic that inspects the goal state.
           </td>
           <td>
-            <em>week4-induction.lean</em> + a one-page markdown note <em>induction-tips.md</em>.
+            <em>week4-meta.lean</em>: A tactic `elab "check_type"` that prints the current goal's type to the console.
           </td>
           <td>
-            - TPiL4: Induction  
-            - Book of Proof: induction section
+            - Lean 4 Metaprogramming Book
+            - "Macro" vs "Elab" chapters
           </td>
-          <td class="col-hours">7–10</td>
+          <td class="col-hours">10–12</td>
           <td class="col-completed"><input type="checkbox"></td>
-          <td></td>
+          <td>Hardest week. Don't skip.</td>
         </tr>
 
         <tr>
           <td>5</td>
-          <td>S1 — Lean Basics</td>
-          <td>Functional programming in Lean</td>
+          <td>P2 — The Bridge</td>
+          <td>"Hello World" Python-Lean</td>
           <td>
-            Implement functions on lists (map-like, filter-like).  
-            Prove at least 2 properties (e.g., length after append).
+            Install `lean-interact` or `repl`. <br>
+            Write a Python script that starts a Lean server and sends a command string.
           </td>
           <td>
-            Small Lean module <em>week5-fp.lean</em> + GitHub README section "Lean FP mini-examples".
+            <em>bridge.py</em>: Script that sends "1+1" to Lean and parses the output "2".
           </td>
           <td>
-            - Functional Programming in Lean (early chapters)  
-            - TPiL4: functions & types
+            - lean-interact (PyPI)
+            - Lean REPL documentation
           </td>
-          <td class="col-hours">7–9</td>
+          <td class="col-hours">6–8</td>
           <td class="col-completed"><input type="checkbox"></td>
-          <td></td>
+          <td>Proof of concept.</td>
         </tr>
 
         <tr>
           <td>6</td>
-          <td>S1 — Lean Basics</td>
-          <td>Tactics & automation</td>
+          <td>P2 — The Bridge</td>
+          <td>LeanDojo (Industrial Tooling)</td>
           <td>
-            Learn and practice <code>simp</code>, <code>linarith</code>, <code>ring</code>.  
-            Redo some older proofs using these tactics.
+            Install <strong>LeanDojo</strong>. <br>
+            Use it to trace a repo and extract (Theorem, Proof) pairs. <br>
+            Understand the `traced_repo` object.
           </td>
           <td>
-            <em>tactic-cheatsheet.md</em> in repo with annotated examples of each tactic.
+            <em>extract_data.py</em>: Generates a JSON file with 100 theorems and their tactic steps from Mathlib.
           </td>
           <td>
-            - TPiL4: tactics chapter  
-            - Lean docs for tactics
+            - LeanDojo Paper
+            - LeanDojo GitHub / Docs
           </td>
-          <td class="col-hours">6–8</td>
+          <td class="col-hours">8–10</td>
           <td class="col-completed"><input type="checkbox"></td>
-          <td></td>
+          <td>Standard research tool.</td>
         </tr>
 
         <tr>
           <td>7</td>
-          <td>S1 — Lean Basics</td>
-          <td>Paper proofs vs Lean proofs</td>
+          <td>P2 — The Bridge</td>
+          <td>Premise Selection (Data Eng)</td>
           <td>
-            Solve 8–10 logic problems on paper, then re-implement 4–5 in Lean.  
-            Focus on clean structure and comments.
+            <strong>Problem:</strong> Which lemma to use? <br>
+            Build a "Semantic Search" tool. <br>
+            Use TF-IDF or OpenAI Embeddings on theorem statements.
           </td>
           <td>
-            <em>week7-paper-vs-lean.pdf</em> (scan/photo) + matching <em>week7-lean.lean</em>.
+            <em>retrieve_lemma.py</em>: Input a theorem string, output top-5 relevant Mathlib lemma names.
           </td>
           <td>
-            - Velleman / Book of Proof logic problems  
-            - TPiL4: relevant sections
+            - "HyperTree Proof Search" (Paper)
+            - scikit-learn (TF-IDF)
           </td>
-          <td class="col-hours">6–8</td>
+          <td class="col-hours">8–10</td>
           <td class="col-completed"><input type="checkbox"></td>
-          <td></td>
+          <td>Critical for RAG.</td>
         </tr>
 
         <tr>
           <td>8</td>
-          <td>S1 — Lean Basics</td>
-          <td>Stage review + mini-showcase</td>
+          <td>P2 — The Bridge</td>
+          <td>The Gym (Eval Loop)</td>
           <td>
-            Review all Lean basics.  
-            Pick your 3 favourite Lean proofs and polish them for readability.
+            Create the "Agent Loop": <br>
+            1. Python reads state. <br>
+            2. Python proposes tactic (random for now). <br>
+            3. Lean executes. <br>
+            4. Python gets feedback.
           </td>
           <td>
-            Public GitHub repo <em>lean-basics-showcase</em> with 3–5 best beginner proofs and a short README.
+            <em>agent_loop.py</em>: A script that tries `simp`, `ring`, `linarith` on a goal until one works.
           </td>
           <td>
-            - Your previous Lean files  
-            - Any feedback from Zulip, if posted
+            - OpenAI Gym interface concepts
+            - LeanDojo `Dojo` class
           </td>
-          <td class="col-hours">5–7</td>
+          <td class="col-hours">8–10</td>
           <td class="col-completed"><input type="checkbox"></td>
-          <td></td>
+          <td>Foundation for RL.</td>
         </tr>
 
-        <!-- STAGE 2: MATH + LEAN INTEGRATION (Weeks 9–16) -->
         <tr>
           <td>9</td>
-          <td>S2 — Math + Lean</td>
-          <td>Mathlib navigation</td>
+          <td>P3 — Neuro Layer</td>
+          <td>Deep Learning Fast Track</td>
           <td>
-            Learn how mathlib is organized.  
-            Practice finding lemmas with <code>search?</code> or documentation tools.
+            Learn Seq2Seq architectures. <br>
+            Understand "Attention" mechanisms (Transformers). <br>
+            Map "English->French" to "Theorem->Proof".
           </td>
           <td>
-            Short markdown file <em>mathlib-notes.md</em> with patterns you discover for navigating lemmas.
+            <em>seq2seq_tutorial.ipynb</em>: Complete the PyTorch Translation tutorial.
           </td>
           <td>
-            - Mathematics in Lean (intro)  
-            - mathlib docs
+            - PyTorch Seq2Seq Tutorial
+            - "The Illustrated Transformer"
           </td>
-          <td class="col-hours">6–8</td>
+          <td class="col-hours">10–12</td>
           <td class="col-completed"><input type="checkbox"></td>
-          <td></td>
+          <td>Theory week.</td>
         </tr>
 
         <tr>
           <td>10</td>
-          <td>S2 — Math + Lean</td>
-          <td>Sets, functions, relations</td>
+          <td>P3 — Neuro Layer</td>
+          <td>LLM Fine-Tuning</td>
           <td>
-            Work through sets/functions in Mathematics in Lean.  
-            Formalize 3–5 textbook propositions.
+            Use HuggingFace `transformers`. <br>
+            Fine-tune a small model (T5 or ByT5) on your Week 6 dataset. <br>
+            Task: Input State -> Output Tactic.
           </td>
           <td>
-            <em>week10-sets-functions.lean</em> with comments mapping each theorem to book statement.
+            <em>train_prover.py</em> + Training Loss Curve.
           </td>
           <td>
-            - Mathematics in Lean: sets & functions  
-            - Tao or Velleman: sets chapter
+            - HuggingFace Trainer API
+            - LeanDojo Benchmark datasets
           </td>
-          <td class="col-hours">7–9</td>
+          <td class="col-hours">10–12</td>
           <td class="col-completed"><input type="checkbox"></td>
-          <td></td>
+          <td>First "AI" model.</td>
         </tr>
 
         <tr>
           <td>11</td>
-          <td>S2 — Math + Lean</td>
-          <td>Elementary algebra in Lean</td>
+          <td>P3 — Neuro Layer</td>
+          <td>Retrieval Augmented Generation (RAG)</td>
           <td>
-            Explore groups or rings in mathlib.  
-            Formalize basic group identities or ring equalities.
+            Connect Week 7 (Retriever) with Week 10 (Generator). <br>
+            Prompt: "Given these lemmas [L1, L2], prove [Goal]".
           </td>
           <td>
-            <em>algebra-snippets.lean</em> + a README section "Algebra with Lean".
+            <em>rag_prover.py</em>: A script that retrieves premises before generating a tactic.
           </td>
           <td>
-            - Mathematics in Lean: algebra  
-            - Dummit & Foote: early group theory
+            - "LeanDojo: RAG for Theorems"
+            - FAISS (Facebook AI Similarity Search)
           </td>
-          <td class="col-hours">7–9</td>
+          <td class="col-hours">8–10</td>
           <td class="col-completed"><input type="checkbox"></td>
-          <td></td>
+          <td>State of the art.</td>
         </tr>
 
         <tr>
           <td>12</td>
-          <td>S2 — Math + Lean</td>
-          <td>Real analysis basics</td>
+          <td>P3 — Neuro Layer</td>
+          <td>Tree Search (Inference)</td>
           <td>
-            Formalize simple analytic facts (e.g., monotone sequences, simple inequalities).  
-            Compare Lean versions to Tao's text proofs.
+            LLMs make mistakes. Implement Search. <br>
+            Use Best-First Search (BFS) where the LLM "scores" the branches.
           </td>
           <td>
-            <em>analysis-mini.lean</em> + 0.5–1 page note "analysis-in-lean.md".
+            <em>proof_search.py</em>: Implements a search tree allowing backtracking when tactics fail.
           </td>
           <td>
-            - Mathematics in Lean: analysis  
-            - Tao, Analysis I (early chapters)
+            - "AlphaProof" concepts
+            - Graph Theory (Trees)
           </td>
-          <td class="col-hours">7–10</td>
+          <td class="col-hours">10–12</td>
           <td class="col-completed"><input type="checkbox"></td>
-          <td></td>
+          <td>The "Brain" of the agent.</td>
         </tr>
 
         <tr>
           <td>13</td>
-          <td>S2 — Math + Lean</td>
-          <td>Logic for CS (theory)</td>
+          <td>P4 — Portfolio</td>
+          <td>Community & Landscape</td>
           <td>
-            Study propositional and first-order logic semantics.  
-            Translate 3–4 exercises into Lean statements.
+            Read recent AITP papers (2024-2025). <br>
+            Join Lean Zulip `#machine-learning`. <br>
+            Identify a gap (e.g., "AI is bad at inequality proofs" or "AI struggles with MiniF2F algebra").
           </td>
           <td>
-            <em>logic-notes.md</em> linking each theoretical concept to Lean examples from your repo.
+            <em>lit_review.md</em>: Summary of 3 top papers and where your tool fits.
           </td>
           <td>
-            - Huth & Ryan: intro chapters  
-            - Gallier: notes on logic
+            - AITP Conference Proceedings
+            - arXiv (Neuro-symbolic AI)
           </td>
           <td class="col-hours">6–8</td>
           <td class="col-completed"><input type="checkbox"></td>
-          <td></td>
+          <td>Contextualize your work.</td>
         </tr>
 
         <tr>
           <td>14</td>
-          <td>S2 — Math + Lean</td>
-          <td>Problem set sprint</td>
+          <td>P4 — Portfolio</td>
+          <td>Capstone: "Auto-Formalizer" or "Copilot"</td>
           <td>
-            Solve 15–20 proof problems (pure math).  
-            Implement at least 8 in Lean with clear structure.
+            Build a user-facing tool. <br>
+            Example: A CLI tool where you type a math problem, and it suggests the Lean code.
           </td>
           <td>
-            <em>week14-problemset.lean</em> + small index at top listing all problems solved.
+            <em>MVP v0.1</em>: A working script demonstrating the end-to-end pipeline on unseen problems.
           </td>
           <td>
-            - Velleman / Book of Proof problems  
-            - Your math textbooks
+            - Your codebase (Weeks 5-12)
+            - VS Code Extension API (optional)
           </td>
-          <td class="col-hours">7–9</td>
+          <td class="col-hours">12–15</td>
           <td class="col-completed"><input type="checkbox"></td>
-          <td></td>
+          <td>The "Money" project.</td>
         </tr>
 
         <tr>
           <td>15</td>
-          <td>S2 — Math + Lean</td>
-          <td>Mini math chapter formalization (part 1)</td>
+          <td>P4 — Portfolio</td>
+          <td>Polish & Documentation</td>
           <td>
-            Choose a small coherent topic (e.g., sequences, vector spaces).  
-            Define core objects and prove 3–4 lemmas.
+            Clean up code. Add docstrings. <br>
+            Write a technical blog post: "How I taught an AI to prove Math using LeanDojo."
           </td>
           <td>
-            New public repo <em>lean-mini-chapter</em> initialized with structure & first lemmas.
+            Public GitHub Repo with nice README + Medium/Substack post.
           </td>
           <td>
-            - Mathematics in Lean (matching section)  
-            - Tao, Axler, or similar textbook
+            - "Write the Docs" guide
+            - Distill.pub style
           </td>
-          <td class="col-hours">7–10</td>
+          <td class="col-hours">8–10</td>
           <td class="col-completed"><input type="checkbox"></td>
-          <td></td>
+          <td>Visibility > Code quality.</td>
         </tr>
 
         <tr>
           <td>16</td>
-          <td>S2 — Math + Lean</td>
-          <td>Mini math chapter (part 2) & stage review</td>
+          <td>P4 — Portfolio</td>
+          <td>Outreach & Application</td>
           <td>
-            Add more results and clean up proofs.  
-            Write a high-level description of the chapter you formalized.
+            Update CV: "Neuro-Symbolic AI Engineer". <br>
+            Email labs/startups with your Blog Post + Repo.
           </td>
           <td>
-            Updated <em>lean-mini-chapter</em> repo + markdown <em>CHAPTER.md</em> explaining what’s formalized.
+            <em>applications.md</em>: List of 5 labs/companies (e.g., Symbolica, DeepMind) to contact.
           </td>
           <td>
-            - Your mini-chapter repo  
-            - mathlib files for reference
-          </td>
-          <td class="col-hours">6–8</td>
-          <td class="col-completed"><input type="checkbox"></td>
-          <td></td>
-        </tr>
-
-        <!-- STAGE 3: FORMAL METHODS INTRO (Weeks 17–22) -->
-        <tr>
-          <td>17</td>
-          <td>S3 — Formal Methods</td>
-          <td>Software Foundations intro</td>
-          <td>
-            Start Software Foundations (SF) Vol 1.  
-            Understand inductive definitions and simple proofs in Coq (or map ideas to Lean).
-          </td>
-          <td>
-            Repo folder <em>sf-notes/</em> with first Coq/Lean exercises mirrored.
-          </td>
-          <td>
-            - Software Foundations Vol 1  
-            - Coq / Lean documentation
-          </td>
-          <td class="col-hours">7–8</td>
-          <td class="col-completed"><input type="checkbox"></td>
-          <td></td>
-        </tr>
-
-        <tr>
-          <td>18</td>
-          <td>S3 — Formal Methods</td>
-          <td>Tiny language semantics (part 1)</td>
-          <td>
-            Define a tiny arithmetic expression language in Lean.  
-            Write a small interpreter / evaluator function.
-          </td>
-          <td>
-            Lean module <em>tiny-lang.lean</em> with syntax + eval and simple tests.
-          </td>
-          <td>
-            - SF semantics chapters  
-            - TAPL (early chapters, optional)
-          </td>
-          <td class="col-hours">7–9</td>
-          <td class="col-completed"><input type="checkbox"></td>
-          <td></td>
-        </tr>
-
-        <tr>
-          <td>19</td>
-          <td>S3 — Formal Methods</td>
-          <td>Tiny language semantics (part 2)</td>
-          <td>
-            State and prove simple properties (e.g., determinism, preservation of value).  
-            Focus on structuring bigger proofs in Lean.
-          </td>
-          <td>
-            Updated <em>tiny-lang.lean</em> with 2–3 theorems + short <em>tiny-lang-notes.md</em>.
-          </td>
-          <td>
-            - Your tiny language file  
-            - SF / TAPL proofs for inspiration
-          </td>
-          <td class="col-hours">7–9</td>
-          <td class="col-completed"><input type="checkbox"></td>
-          <td></td>
-        </tr>
-
-        <tr>
-          <td>20</td>
-          <td>S3 — Formal Methods</td>
-          <td>Mathlib contribution preparation</td>
-          <td>
-            Identify a small lemma or definition that could fit in mathlib.  
-            Discuss on Zulip for guidance.
-          </td>
-          <td>
-            Draft Lean file <em>candidate-mathlib-lemma.lean</em> + Zulip link in Remarks.
-          </td>
-          <td>
-            - mathlib contributing guide  
-            - Lean Zulip (mathlib stream)
-          </td>
-          <td class="col-hours">6–8</td>
-          <td class="col-completed"><input type="checkbox"></td>
-          <td></td>
-        </tr>
-
-        <tr>
-          <td>21</td>
-          <td>S3 — Formal Methods</td>
-          <td>First tiny PR or external snippet</td>
-          <td>
-            Convert your candidate lemma into a proper PR (if feasible), or publish as a clean Gist/repo if PR is not ready.
-          </td>
-          <td>
-            Link to first mathlib PR or public <em>lean-snippet</em> repo with documentation.
-          </td>
-          <td>
-            - GitHub PR interface  
-            - Existing small mathlib PRs as examples
-          </td>
-          <td class="col-hours">6–8</td>
-          <td class="col-completed"><input type="checkbox"></td>
-          <td></td>
-        </tr>
-
-        <tr>
-          <td>22</td>
-          <td>S3 — Formal Methods</td>
-          <td>Stage 3 review & FM summary</td>
-          <td>
-            Review what you learned from SF and tiny language project.  
-            Summarize how formal methods relate to ML/AI in your own words.
-          </td>
-          <td>
-            1–2 page markdown <em>formal-methods-summary.md</em> referencing your Lean/Coq files.
-          </td>
-          <td>
-            - SF notes  
-            - Your tiny-lang project
+            - "Cold Emailing for Research"
+            - LinkedIn
           </td>
           <td class="col-hours">5–7</td>
           <td class="col-completed"><input type="checkbox"></td>
-          <td></td>
-        </tr>
-
-        <!-- STAGE 4: ML FOUNDATIONS WITH PROJECTS (Weeks 23–30) -->
-        <tr>
-          <td>23</td>
-          <td>S4 — ML Foundations</td>
-          <td>Python + NumPy + pandas refresh</td>
-          <td>
-            Brush up Python basics.  
-            Practice data loading, manipulation, simple plotting.  
-            Implement a manual least-squares linear regression.
-          </td>
-          <td>
-            New public repo <em>ml-foundations</em> with <em>linear-regression.ipynb</em>.
-          </td>
-          <td>
-            - Python docs  
-            - NumPy & pandas tutorials
-          </td>
-          <td class="col-hours">7–9</td>
-          <td class="col-completed"><input type="checkbox"></td>
-          <td></td>
-        </tr>
-
-        <tr>
-          <td>24</td>
-          <td>S4 — ML Foundations</td>
-          <td>Classical ML: classification</td>
-          <td>
-            Learn logistic regression and decision trees.  
-            Train a classifier on a simple dataset (e.g., Iris).
-          </td>
-          <td>
-            Notebook <em>iris-classification.ipynb</em> with metrics & plots.
-          </td>
-          <td>
-            - scikit-learn tutorials  
-            - Any intro ML course/notes
-          </td>
-          <td class="col-hours">7–9</td>
-          <td class="col-completed"><input type="checkbox"></td>
-          <td></td>
-        </tr>
-
-        <tr>
-          <td>25</td>
-          <td>S4 — ML Foundations</td>
-          <td>Neural network basics</td>
-          <td>
-            Install PyTorch or JAX.  
-            Implement a simple feedforward network for MNIST or similar dataset.
-          </td>
-          <td>
-            Notebook <em>mnist-mlp.ipynb</em> + short section in README summarizing results.
-          </td>
-          <td>
-            - PyTorch tutorials  
-            - Your ML repo
-          </td>
-          <td class="col-hours">7–10</td>
-          <td class="col-completed"><input type="checkbox"></td>
-          <td></td>
-        </tr>
-
-        <tr>
-          <td>26</td>
-          <td>S4 — ML Foundations</td>
-          <td>Sequence models / attention (high level)</td>
-          <td>
-            Study RNNs, LSTMs, transformers conceptually.  
-            Run a small text classification model (pre-built or lightly modified).
-          </td>
-          <td>
-            <em>text-classification.ipynb</em> with commentary: how this might relate to sequence of tactics.
-          </td>
-          <td>
-            - High-level DL/transformer tutorials  
-            - Online lectures/blog posts
-          </td>
-          <td class="col-hours">6–8</td>
-          <td class="col-completed"><input type="checkbox"></td>
-          <td></td>
-        </tr>
-
-        <tr>
-          <td>27</td>
-          <td>S4 — ML Foundations</td>
-          <td>Mini end-to-end ML project</td>
-          <td>
-            Choose a non-Lean dataset (Kaggle/UCI).  
-            Do EDA, baseline, model comparison, and a short write-up.
-          </td>
-          <td>
-            Folder <em>project1-ml/</em> with notebook + <em>REPORT.md</em>.
-          </td>
-          <td>
-            - Kaggle / UCI dataset  
-            - scikit-learn / PyTorch
-          </td>
-          <td class="col-hours">7–10</td>
-          <td class="col-completed"><input type="checkbox"></td>
-          <td></td>
-        </tr>
-
-        <tr>
-          <td>28</td>
-          <td>S4 — ML Foundations</td>
-          <td>Data perspectives for proofs</td>
-          <td>
-            Think about proof states as data: goals, context, tactics.  
-            Sketch possible fields you could log from Lean for future ML.
-          </td>
-          <td>
-            <em>lean-data-design.md</em> describing candidate schema for proof traces (JSON-style).
-          </td>
-          <td>
-            - Your Lean experience  
-            - Any AI-for-theorem-proving blog/paper summaries (optional)
-          </td>
-          <td class="col-hours">5–7</td>
-          <td class="col-completed"><input type="checkbox"></td>
-          <td></td>
-        </tr>
-
-        <tr>
-          <td>29</td>
-          <td>S4 — ML Foundations</td>
-          <td>Review & align with AI-for-Lean goal</td>
-          <td>
-            Review your ML notebooks and Lean work.  
-            Decide what AI helper you want first: tactic prediction, lemma suggestion, or goal similarity search.
-          </td>
-          <td>
-            Short plan <em>ai-for-lean-plan.md</em> with 2–3 phases and milestones.
-          </td>
-          <td>
-            - Your ML repo  
-            - Your Lean repos
-          </td>
-          <td class="col-hours">5–7</td>
-          <td class="col-completed"><input type="checkbox"></td>
-          <td></td>
-        </tr>
-
-        <tr>
-          <td>30</td>
-          <td>S4 — ML Foundations</td>
-          <td>Stage 4 showcase</td>
-          <td>
-            Clean up ML repos & notebooks.  
-            Ensure everything runs from scratch and is readable.
-          </td>
-          <td>
-            Polished <em>ml-foundations</em> repo with updated README linking to your 3–4 key notebooks.
-          </td>
-          <td>
-            - Your ML code  
-            - Example open-source ML project repos for style
-          </td>
-          <td class="col-hours">5–7</td>
-          <td class="col-completed"><input type="checkbox"></td>
-          <td></td>
-        </tr>
-
-        <!-- STAGE 5: AI-FOR-LEAN ITERATIVE PROJECT (Weeks 31–38) -->
-        <tr>
-          <td>31</td>
-          <td>S5 — AI-for-Lean</td>
-          <td>AI-for-Lean v0: scope & design</td>
-          <td>
-            Pick a concrete objective (e.g., suggest next tactic).  
-            Design minimal data pipeline: what to log, where to store, simple representation.
-          </td>
-          <td>
-            <em>ai-lean-v0-design.md</em> with diagrams / bullet points.
-          </td>
-          <td>
-            - <em>ai-for-lean-plan.md</em>  
-            - <em>lean-data-design.md</em>
-          </td>
-          <td class="col-hours">5–7</td>
-          <td class="col-completed"><input type="checkbox"></td>
-          <td></td>
-        </tr>
-
-        <tr>
-          <td>32</td>
-          <td>S5 — AI-for-Lean</td>
-          <td>Data extraction script</td>
-          <td>
-            Write a script (even if semi-manual) to extract (goal, context, tactic) examples from your own Lean files.
-          </td>
-          <td>
-            New repo <em>lean-ai-data</em> with <em>extract.py</em> and sample JSON/CSV file.
-          </td>
-          <td>
-            - Python scripting  
-            - Your Lean projects
-          </td>
-          <td class="col-hours">7–9</td>
-          <td class="col-completed"><input type="checkbox"></td>
-          <td></td>
-        </tr>
-
-        <tr>
-          <td>33</td>
-          <td>S5 — AI-for-Lean</td>
-          <td>Feature engineering v1</td>
-          <td>
-            Convert goals & tactics into simple numeric features (e.g., token bag-of-words, IDs).  
-            Inspect data distributions.
-          </td>
-          <td>
-            Notebook <em>features-v1.ipynb</em> in <em>lean-ai-data</em> exploring the feature space.
-          </td>
-          <td>
-            - scikit-learn preprocessing  
-            - pandas, NumPy
-          </td>
-          <td class="col-hours">7–9</td>
-          <td class="col-completed"><input type="checkbox"></td>
-          <td></td>
-        </tr>
-
-        <tr>
-          <td>34</td>
-          <td>S5 — AI-for-Lean</td>
-          <td>Baseline model (classifier)</td>
-          <td>
-            Train a basic classifier to predict tactic from goal features.  
-            Measure accuracy and top-k suggestions.
-          </td>
-          <td>
-            Notebook <em>baseline-tactic-model.ipynb</em> with metrics & simple plots.
-          </td>
-          <td>
-            - scikit-learn / simple MLP  
-            - Your extracted dataset
-          </td>
-          <td class="col-hours">7–10</td>
-          <td class="col-completed"><input type="checkbox"></td>
-          <td></td>
-        </tr>
-
-        <tr>
-          <td>35</td>
-          <td>S5 — AI-for-Lean</td>
-          <td>Prediction CLI / tool v0</td>
-          <td>
-            Build a small CLI script that:  
-            - Takes a text goal or example,  
-            - Loads your model,  
-            - Prints top-k predicted tactics.
-          </td>
-          <td>
-            Repo <em>lean-tactic-helper</em> with <em>predict.py</em> and usage examples in README.
-          </td>
-          <td>
-            - Python CLI patterns  
-            - Your baseline model
-          </td>
-          <td class="col-hours">7–9</td>
-          <td class="col-completed"><input type="checkbox"></td>
-          <td></td>
-        </tr>
-
-        <tr>
-          <td>36</td>
-          <td>S5 — AI-for-Lean</td>
-          <td>Embeddings & retrieval v1</td>
-          <td>
-            Use a text embedding model to embed lemma statements and goals.  
-            Implement k-NN retrieval of similar lemmas.
-          </td>
-          <td>
-            Notebook <em>lemma-retrieval-v1.ipynb</em> showing some example queries and results.
-          </td>
-          <td>
-            - Sentence embedding library  
-            - Basic k-NN / similarity search
-          </td>
-          <td class="col-hours">7–10</td>
-          <td class="col-completed"><input type="checkbox"></td>
-          <td></td>
-        </tr>
-
-        <tr>
-          <td>37</td>
-          <td>S5 — AI-for-Lean</td>
-          <td>AI-for-Lean v1: combined helper</td>
-          <td>
-            Combine classifier + retrieval ideas into a single "helper" script for yourself.  
-            Use it on a few real Lean goals and log what works/doesn’t.
-          </td>
-          <td>
-            Updated <em>lean-tactic-helper</em> with both prediction and retrieval modes, plus <em>EXPERIMENTS.md</em>.
-          </td>
-          <td>
-            - Your previous AI-for-Lean repos  
-            - Lean projects as testbed
-          </td>
-          <td class="col-hours">7–9</td>
-          <td class="col-completed"><input type="checkbox"></td>
-          <td></td>
-        </tr>
-
-        <tr>
-          <td>38</td>
-          <td>S5 — AI-for-Lean</td>
-          <td>Evaluation & write-up (technical)</td>
-          <td>
-            Systematically evaluate success rate on a small set of proof goals.  
-            Document where the system helps and where it fails.
-          </td>
-          <td>
-            2–3 page markdown <em>ai-for-lean-v1-report.md</em> (can later become blog or part of portfolio).
-          </td>
-          <td>
-            - Your experimental logs  
-            - Your Lean goals dataset
-          </td>
-          <td class="col-hours">6–8</td>
-          <td class="col-completed"><input type="checkbox"></td>
-          <td></td>
-        </tr>
-
-        <!-- STAGE 6: INTEGRATION & PORTFOLIO (Weeks 39–42) -->
-        <tr>
-          <td>39</td>
-          <td>S6 — Integration</td>
-          <td>Integrate Lean projects + AI helper</td>
-          <td>
-            Run your AI helper on:  
-            - mini math chapter,  
-            - tiny language proofs.  
-            See if suggestions genuinely speed you up.
-          </td>
-          <td>
-            Short markdown <em>integration-notes.md</em> describing 2–3 concrete examples of assistance.
-          </td>
-          <td>
-            - <em>lean-mini-chapter</em>  
-            - <em>tiny-lang</em>  
-            - <em>lean-tactic-helper</em>
-          </td>
-          <td class="col-hours">6–8</td>
-          <td class="col-completed"><input type="checkbox"></td>
-          <td></td>
-        </tr>
-
-        <tr>
-          <td>40</td>
-          <td>S6 — Integration</td>
-          <td>Public-facing README / portfolio page</td>
-          <td>
-            Create a single "hub" README or simple static page listing:  
-            Lean basics repo, mini-chapter, tiny-language, ML repo, AI-for-Lean helper.
-          </td>
-          <td>
-            Repo or page <em>formal-methods-ml-portfolio</em> linking to all projects with short descriptions.
-          </td>
-          <td>
-            - Your existing repos  
-            - Example GitHub portfolio READMEs
-          </td>
-          <td class="col-hours">5–7</td>
-          <td class="col-completed"><input type="checkbox"></td>
-          <td></td>
-        </tr>
-
-        <tr>
-          <td>41</td>
-          <td>S6 — Integration</td>
-          <td>CV & LinkedIn / profile update</td>
-          <td>
-            Update your CV with: Lean, formal methods, ML, and AI-for-Lean project.  
-            Add selected links in a "Projects" section.
-          </td>
-          <td>
-            New CV version (PDF) emphasizing roles: ML engineer/researcher, formal methods + ML.
-          </td>
-          <td>
-            - Example ML / research engineer CVs  
-            - Your portfolio hub
-          </td>
-          <td class="col-hours">4–6</td>
-          <td class="col-completed"><input type="checkbox"></td>
-          <td></td>
-        </tr>
-
-        <tr>
-          <td>42</td>
-          <td>S6 — Integration</td>
-          <td>Final reflection & targeting roles</td>
-          <td>
-            Reflect on entire journey.  
-            Identify 5–10 companies or research groups working on theorem proving / formal methods / ML, and map your projects to their work.
-          </td>
-          <td>
-            <em>next-steps.md</em> listing target organisations, email templates, and how you’ll present your portfolio.
-          </td>
-          <td>
-            - Job boards / lab pages (for inspiration)  
-            - Your portfolio + CV
-          </td>
-          <td class="col-hours">4–6</td>
-          <td class="col-completed"><input type="checkbox"></td>
-          <td></td>
+          <td>Launch.</td>
         </tr>
       </tbody>
     </table>
 
     <div class="small-note">
-      You can edit this file anytime to adjust weeks, add actual URLs to resources, or change deliverables.
-      The key idea: every few weeks, you ship something visible — a repo, notebook, or write-up — that shows Lean,
-      formal methods, and ML/AI converging towards AI-assisted proof tooling.
+      <strong>Crucial Note:</strong> Phase 1, Week 3 is intentionally set to "Benchmarks" (MiniF2F/IMO) rather than "Textbook Formalization." 
+      Formalizing an entire book (like Munkres or Dummit & Foote) is a massive time sink with low ROI for AI Engineering. 
+      Formalizing benchmark problems directly prepares you for the way AI models are evaluated in industry.
     </div>
   </div>
 </body>
